@@ -1,8 +1,11 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 body {
   height: 100%;
   width: 100%;
-  margin: 0;
-  padding: 0;
   background-color: rgba(46, 49, 49, .85);
 }
 header {
@@ -72,17 +75,8 @@ section#featured  {
   font-size: 1rem;
   margin: 0;
   padding-bottom: 3rem;
-
 }
 
-#featured container {
-  width: 100%;
-  display: block;
-}
-
-#featured .col-md-5 {
-  padding: 0;
-}
 
 #featured h1 {
   font-size: 3rem;
@@ -93,7 +87,7 @@ section#featured  {
 #featured ul {
   padding: 0;
   list-style: none;
-  font-size:1.5rem;
+  font-size: 1.5rem;
 }
 
 #attributes h3 {
@@ -105,14 +99,14 @@ section#featured  {
   border-bottom: 2px solid white;
 }
 #stats li {
-  margin: 1.2rem 0;
+  margin: 1.7rem 0;
 }
 
 #featured img {
   margin-bottom: 1rem;
 }
 
-section #hr {
+.row:nth-child(2) .col-12 {
   width: 100%;
   height: 2px;
   background-color: white;
