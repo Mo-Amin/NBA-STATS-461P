@@ -63,7 +63,6 @@ section {
   width: 80%;
 }
 
-
 /* Featured player styles */
 
 section#featured  {
@@ -77,12 +76,10 @@ section#featured  {
   padding-bottom: 3rem;
 }
 
-
 #featured h1 {
   font-size: 3rem;
   margin-bottom: 2rem;
 } 
-
 
 #featured ul {
   padding: 0;
@@ -127,6 +124,5 @@ section#featured  {
     margin: 0 auto;
   }
 }
-
 
 /* Featured player styles */
