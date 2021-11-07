@@ -1,0 +1,51 @@
+#body {
+  background-color: black;
+  animation: fadeInAnimation ease 1.3s;
+  animation-iteration-count: 1;
+  animation-fill-mode: forwards;
+}
+.card {
+  animation: fadeInAnimation ease 1.3s;
+  animation-iteration-count: 1;
+  animation-fill-mode: forwards;
+}
+/* https://www.geeksforgeeks.org/how-to-create-fade-in-effect-on-page-load-using-css/ */
+@keyframes fadeInAnimation {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+.card-body {
+  display: flex;
+  flex-wrap: wrap;
+  background-color: whitesmoke;
+  color: black;
+  justify-content: center;
+  align-items: center;
+  font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
+}
+.form-group {
+  display: flex;
+  justify-content: center;
+  font-size: 2em;
+  font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
+  margin: 20px;
+}
+input {
+  width: 70%;
+  height: 5vh;
+  border-radius: 10px;
+  text-align: center;
+}
+.Player_container {
+  display: flex;
+  justify-content: center;
+}
+.Player_container > * {
+  display: flex;
+  justify-content: center;
+  width: 90%;
+}
