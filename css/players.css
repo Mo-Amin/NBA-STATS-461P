@@ -129,3 +129,21 @@ section {
   padding: 0;
   margin: 0;
 }
+
+#StatChart {
+  background-color: black;
+  color: white;
+}
+#Option_label {
+  color: white;
+  margin-top: 30px;
+  margin-bottom: 30px;
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+}
+#Graph_option {
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+  font-weight: bold;
+  background-color: white;
+  color: rgb(206, 6, 6);
+  text-align: center;
+}

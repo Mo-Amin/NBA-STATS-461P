@@ -97,16 +97,23 @@
       </table>
 
       <div id="Graphs">
-        <label for="Graph_option"
-          ><b>What would you like to see graphed? </b></label
+        <label id="Option_label" for="Graph_option"
+          ><b>What STAT would you like to see graphed? </b></label
         >
         <select name="Graph_option" id="Graph_option">
+          <option value="None">No Option Selected</option>
           <option value="ppg">Points</option>
-          <option value="waitlist">Waitlist</option>
-          <option value="registered">Registered</option>
-          <option value="other">Other</option>
+          <option value="mpg">Minutes</option>
+          <option value="apg">Assists</option>
+          <option value="rpg">Rebounds</option>
+          <option value="bpg">Blocks</option>
+          <option value="spg">Steals</option>
+          <option value="topg">Turnovers</option>
+          <option value="fgp">FG%</option>
+          <option value="ftp">FT%</option>
         </select>
       </div>
+      <!-- <canvas id="StatChart"></canvas>-->
     </section>
 
     <div class="form-group">

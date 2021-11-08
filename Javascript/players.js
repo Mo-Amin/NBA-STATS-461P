@@ -17,7 +17,47 @@ let table = document.querySelector("#table");
 table.style.display = "none";
 let player_prof = document.querySelector("#player_profile");
 player_prof.style.display = "none";
+
 let search = document.querySelector(".form-group");
+
+let backgroundColors = [
+  "rgba(54, 162, 235, 0.8)",
+  "rgba(255, 206, 86, 0.8)",
+  "rgba(255, 99, 132, 0.8)",
+  "rgba(75, 192, 192, 0.8)",
+  "rgba(153, 102, 255, 0.8)",
+  "rgba(255, 159, 64, 0.8)",
+  "rgba(199, 199, 199, 0.8)",
+  "rgba(83, 102, 255, 0.8)",
+  "rgba(40, 159, 64, 0.8)",
+  "rgba(210, 199, 199, 0.8)",
+  "rgba(78, 52, 199, 0.8)",
+  "rgba(54, 162, 235, 0.8)",
+  "rgba(255, 206, 86, 0.8)",
+  "rgba(255, 99, 132, 0.8)",
+  "rgba(75, 192, 192, 0.8)",
+  "rgba(153, 102, 255, 0.8)",
+  "rgba(255, 159, 64, 0.8)",
+  "rgba(199, 199, 199, 0.8)",
+  "rgba(83, 102, 255, 0.8)",
+  "rgba(40, 159, 64, 0.8)",
+  "rgba(210, 199, 199, 0.8)",
+  "rgba(78, 52, 199, 0.8)",
+];
+
+let borderColors = [
+  "rgba(54, 162, 235, 1)",
+  "rgba(255, 206, 86, 1)",
+  "rgba(255, 99, 132, 1)",
+  "rgba(75, 192, 192, 1)",
+  "rgba(153, 102, 255, 1)",
+  "rgba(255, 159, 64, 1)",
+  "rgba(159, 159, 159, 1)",
+  "rgba(83, 102, 255, 1)",
+  "rgba(40, 159, 64, 1)",
+  "rgba(210, 199, 199, 1)",
+  "rgba(78, 52, 199, 1)",
+];
 
 userinput.addEventListener("input", handleinput);
 
@@ -136,18 +176,101 @@ let fetchprofile = (url) => {
 };
 fetchprofile(urlNBA);
 
-let val = null;
 function handleOptionSelection(event) {
-  val = this.value;
+  //console.log(val);
+  console.log(this.value);
+
+  if (this.value !== "None") {
+    let urlPlayerStats = `https://data.nba.net/data/10s/prod/v1/2021/players/${id}_profile.json`;
+    fetch(urlPlayerStats)
+      .then((response) => response.json())
+      .then((data) => {
+        let playerSeasonStats = data.league.standard.stats.regularSeason.season;
+
+        let seasons = [];
+        let seasonStats = [];
+        //We have fetched stats and now want to look through the various seasons
+        //and display the chosen stat as a graph
+        playerSeasonStats.forEach((element) => {
+          seasons.push(String(element.seasonYear));
+          seasonStats.push(parseFloat(element.total[this.value]));
+          console.log(
+            String(element.seasonYear),
+            parseFloat(element.total[this.value])
+          );
+          console.log(seasonStats);
+          console.log(seasons);
+        });
+        //Not existent in html file
+        let StatChart_Check = document.getElementById("StatChart") === null;
+        let StatChart = null;
+        if (!StatChart_Check) {
+          StatChart = document.getElementById("StatChart");
+          StatChart.remove();
+        }
+        StatChart = document.createElement("canvas");
+        StatChart.setAttribute("id", "StatChart");
+
+        document.querySelector("#Graphs").append(StatChart);
+
+        //console.log(StatChart_Check);
+        //let StatChart = document.getElementById("StatChart");
+
+        //https://www.chartjs.org/docs/2.8.0/general/fonts.html
+        Chart.defaults.global.defaultFontColor = "white";
+        Chart.defaults.global.defaultFontSize = 16;
+        Chart.defaults.global.defaultFontStyle = "bold";
+        let chart = new Chart(StatChart, {
+          type: "bar",
+          data: {
+            labels: seasons,
+            datasets: [
+              {
+                label: this.value,
+                data: seasonStats,
+                backgroundColor: backgroundColors,
+                borderColor: borderColors,
+                borderWidth: 1,
+              },
+            ],
+          },
+          options: {
+            //https://www.chartjs.org/docs/2.8.0/
+            scales: { yAxes: [{ ticks: { beginAtZero: true } }] },
+            legend: {
+              label: {
+                fontColor: "white",
+              },
+            },
+          },
+        });
+        //http://jsfiddle.net/jyougo/sv2n4zdh/2/
+        console.log(StatChart_Check);
+        /*
+        if (!StatChart_Check) {
+          chart.StatChart.canvas.removeEventListener(
+            "wheel",
+            chart._wheelHandler
+          );
+        }
+        */
+      })
+      .catch((error) => console.log(error));
+  } else {
+    let StatChart_Check = document.getElementById("StatChart") === null;
+    if (!StatChart_Check) {
+      StatChart = document.getElementById("StatChart");
+      StatChart.remove();
+    }
+  }
 }
 //When we click on player card we want to show player profile
 function handleClick(event) {
   //id = event.path[1].id;
 
   let graph = document.querySelector("#Graph_option");
-  console.log(graph.value);
+  //console.log(graph.value);
   graph.addEventListener("input", handleOptionSelection);
-  if (val != null) console.log(val);
 
   //Get player ID so we can access/find information for that player
   id = this.id;
