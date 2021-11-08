@@ -12,17 +12,11 @@ let lastNameCheck = "";
 
 let userinput = document.querySelector("#userinput");
 let urlNBA = `http://data.nba.net/data/10s/prod/v1/2021/players.json`;
-/*
-let tableStats = document.querySelector("#statTable");
-tableStats.style.display = "none";
-tableStats.style.display = "block";
-*/
-/*
+
 let table = document.querySelector("#table");
 table.style.display = "none";
-*/
 
-//let search = document.querySelector(".form-group");
+let search = document.querySelector(".form-group");
 
 userinput.addEventListener("input", handleinput);
 

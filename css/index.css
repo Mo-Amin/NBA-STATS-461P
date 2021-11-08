@@ -6,7 +6,7 @@
 body {
   height: 100%;
   width: 100%;
-  background-color: rgba(46, 49, 49, .85);
+  background-color: rgba(46, 49, 49, 0.85);
 }
 header {
   font-family: Marker Felt;
@@ -65,10 +65,10 @@ section {
 
 /* Featured player styles */
 
-section#featured  {
+section#featured {
   height: 100%;
   width: 100%;
-  background: rgba(46, 49, 49, .85);
+  background: rgba(46, 49, 49, 0.85);
   /* color: rgba(189, 195, 199, 1); */
   color: white;
   font-size: 1rem;
@@ -79,7 +79,7 @@ section#featured  {
 #featured h1 {
   font-size: 3rem;
   margin-bottom: 2rem;
-} 
+}
 
 #featured ul {
   padding: 0;
@@ -110,8 +110,7 @@ section#featured  {
   margin-top: 2rem;
 }
 
-@media (max-width: 767px)
-{
+@media (max-width: 767px) {
   section {
     width: fit-content;
   }

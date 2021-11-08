@@ -18,6 +18,7 @@
     opacity: 1;
   }
 }
+
 .card-body {
   display: flex;
   flex-wrap: wrap;
@@ -47,5 +48,71 @@ input {
 .Player_container > * {
   display: flex;
   justify-content: center;
-  width: 90%;
+  width: 85%;
+}
+
+#header-row {
+  background-color: black;
+}
+
+#header-row > th {
+  color: white;
+}
+
+tr:hover {
+  background-color: rgba(121, 13, 13, 0.5);
+}
+
+/* How to incorporate border-collapse. Orginated from https://www.w3schools.com/css/css_table.asp */
+#table {
+  display: flex;
+  justify-content: center;
+  background-color: black;
+  padding: 10px;
+}
+thead tr {
+  font-size: 20px;
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+  border-bottom: 1px solid white;
+}
+tbody #season_Column {
+  border-right: 1.5px solid black;
+}
+thead #season_Column {
+  border-right: 1.5px solid black;
+}
+table {
+  color: black;
+  background-color: lightgray;
+  border-collapse: collapse;
+  width: 80%;
+  text-align: center;
+  margin: 0 auto;
+  font-weight: 500;
+}
+tbody tr {
+  border-bottom: 1px solid black;
+}
+td,
+th {
+  padding: 15px;
+}
+tr td {
+  border-top: 2px solid black;
+}
+table,
+tr,
+td {
+  border: 2px solid black;
+}
+#player_info {
+  display: flex;
+  justify-content: flex-start;
+
+  width: 100%;
+  background-image: url("https://www.xmple.com/wallpaper/linear-black-red-gradient-highlight-2560x1080-c2-000000-8b0000-l-50-a-345-f-21.svg");
+}
+section {
+  padding: 0;
+  margin: 0;
 }
