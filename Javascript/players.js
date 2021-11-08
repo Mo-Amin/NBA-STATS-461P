@@ -15,7 +15,8 @@ let urlNBA = `http://data.nba.net/data/10s/prod/v1/2021/players.json`;
 
 let table = document.querySelector("#table");
 table.style.display = "none";
-
+let player_prof = document.querySelector("#player_profile");
+player_prof.style.display = "none";
 let search = document.querySelector(".form-group");
 
 userinput.addEventListener("input", handleinput);
@@ -86,7 +87,7 @@ let fetchprofile = (url) => {
         ) {
           let row_of_cards = document.createElement("div");
 
-          row_of_cards.setAttribute("class", "col-12 col-md-6 col-lg-4");
+          row_of_cards.setAttribute("class", "col-6 col-md-6 col-lg-4");
           row.append(row_of_cards);
           let card = document.createElement("div");
           card.setAttribute("class", "card");
@@ -135,14 +136,24 @@ let fetchprofile = (url) => {
 };
 fetchprofile(urlNBA);
 
+let val = null;
+function handleOptionSelection(event) {
+  val = this.value;
+}
 //When we click on player card we want to show player profile
 function handleClick(event) {
   //id = event.path[1].id;
+
+  let graph = document.querySelector("#Graph_option");
+  console.log(graph.value);
+  graph.addEventListener("input", handleOptionSelection);
+  if (val != null) console.log(val);
 
   //Get player ID so we can access/find information for that player
   id = this.id;
   table.style.display = "block";
   search.style.display = "none";
+  player_prof.style.display = "flex";
   row.remove();
   let urlPlayerStats = `https://data.nba.net/data/10s/prod/v1/2021/players/${id}_profile.json`;
   fetch(urlNBA)
@@ -158,10 +169,20 @@ function handleClick(event) {
           let player_image = document.createElement("img");
 
           player_image.src = `https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/260x190/${element.personId}.png`;
-          info_section.append(player_image);
+
           let team_image = document.createElement("img");
           team_image.src = `https://cdn.nba.com/logos/nba/${element.teamId}/primary/D/logo.svg`;
-          team_image.width = 150;
+          //Just temporary use CSS instead
+          //Just add classes for player images and team images
+          if (window.screen.width < 600) {
+            player_image.width = 130;
+            player_image.height = 95;
+            team_image.width = 75;
+          } else {
+            team_image.width = 150;
+          }
+          info_section.append(player_image);
+
           info_section.append(team_image);
 
           let h1 = document.createElement("h1");

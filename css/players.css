@@ -4,6 +4,7 @@
   animation-iteration-count: 1;
   animation-fill-mode: forwards;
 }
+
 .card {
   animation: fadeInAnimation ease 1.3s;
   animation-iteration-count: 1;
@@ -17,6 +18,21 @@
   100% {
     opacity: 1;
   }
+}
+#player_profile {
+  display: flex;
+
+  padding-top: 100px;
+  overflow-x: scroll;
+}
+#player_info {
+  display: flex;
+  justify-content: flex-start;
+
+  background: linear-gradient(rgb(231, 231, 231), rgb(0, 0, 0));
+  background-size: cover;
+
+  width: 100%;
 }
 
 .card-body {
@@ -48,7 +64,7 @@ input {
 .Player_container > * {
   display: flex;
   justify-content: center;
-  width: 85%;
+  width: 90%;
 }
 
 #header-row {
@@ -60,7 +76,7 @@ input {
 }
 
 tr:hover {
-  background-color: rgba(121, 13, 13, 0.5);
+  background-color: rgba(251, 255, 0, 0.65);
 }
 
 /* How to incorporate border-collapse. Orginated from https://www.w3schools.com/css/css_table.asp */
@@ -69,6 +85,8 @@ tr:hover {
   justify-content: center;
   background-color: black;
   padding: 10px;
+  width: 100%;
+  overflow-x: scroll;
 }
 thead tr {
   font-size: 20px;
@@ -83,7 +101,7 @@ thead #season_Column {
 }
 table {
   color: black;
-  background-color: lightgray;
+  background: linear-gradient(white, rgb(209, 209, 209));
   border-collapse: collapse;
   width: 80%;
   text-align: center;
@@ -95,23 +113,18 @@ tbody tr {
 }
 td,
 th {
-  padding: 15px;
+  padding: 10px;
 }
 tr td {
   border-top: 2px solid black;
+  border-right: 0.5px solid rgba(0, 0, 0, 0.4);
 }
 table,
 tr,
 td {
   border: 2px solid black;
 }
-#player_info {
-  display: flex;
-  justify-content: flex-start;
 
-  width: 100%;
-  background-image: url("https://www.xmple.com/wallpaper/linear-black-red-gradient-highlight-2560x1080-c2-000000-8b0000-l-50-a-345-f-21.svg");
-}
 section {
   padding: 0;
   margin: 0;
