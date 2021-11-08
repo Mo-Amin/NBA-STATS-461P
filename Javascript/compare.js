@@ -22,7 +22,6 @@ form.addEventListener('submit', (event) => {
 
     })
    
-    
 })
 
 async function getData(playerName, playerArray){
