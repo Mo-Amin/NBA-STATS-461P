@@ -126,3 +126,46 @@ section#featured  {
 }
 
 /* Featured player styles */
+
+
+/* Player compare */
+
+section#compare {
+  text-align: center;
+  width: 80%;
+  margin: 0 auto;
+  padding: 0;
+}
+#compare container {
+  width: 100%;
+}
+
+input[type=submit] {
+  margin-top: 1rem;
+}
+
+section#compare h2 {
+  width: fit-content;
+  height: fit-content;
+  margin: 0 auto;
+  font-weight: bold;
+}
+
+section#compare .row:nth-child(1) h1 {
+  margin-bottom: 3rem;
+}
+
+section#compare .col-xl-1 {
+  align-self: center;
+  padding: 0;
+}
+
+section#compare ul {
+  list-style: none;
+  padding: 0;
+}
+
+#statsRow .col-md-4 {
+  margin: 0 2.5rem;
+}
+/* Player compare */
