@@ -1,0 +1,98 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  body {
+    height: 100%;
+    width: 100%;
+    background-color: rgba(46, 49, 49, .85);
+  }
+  header {
+    font-family: Marker Felt;
+    font-size: 24px;
+    font-weight: bold;
+  }
+  
+  .navbar-brand {
+    display: flex;
+    align-items: center;
+  }
+  .navbar-brand h1 {
+    font-size: 35px;
+  }
+  
+  .nav-item .nav-link:hover {
+    color: red;
+  }
+  
+  .nav-item {
+    margin: 5px;
+  }
+  .nav-item:hover {
+    border-top: 4px solid orange;
+  }
+  @media (max-width: 804px) {
+    header {
+      font-size: 20px;
+    }
+  }
+  @media (min-width: 964px) {
+    header {
+      font-size: 28px;
+    }
+  }
+  @media (min-width: 768px) {
+    .navbar-expand-md .navbar-nav .nav-item .nav-link.active {
+      border-bottom: 4px solid red;
+    }
+  }
+  @media (max-width: 768px) {
+    .nav-item:hover {
+      border-bottom: 4px solid orange;
+      border-top: none;
+    }
+  }
+
+
+/* Player compare */
+
+section#compare {
+    text-align: center;
+    width: 80%;
+    margin: 0 auto;
+    padding: 0;
+  }
+  #compare container {
+    width: 100%;
+  }
+  
+  input[type=submit] {
+    margin-top: 1rem;
+  }
+  
+  section#compare h2 {
+    width: fit-content;
+    height: fit-content;
+    margin: 0 auto;
+    font-weight: bold;
+  }
+  
+  section#compare .row:nth-child(1) h1 {
+    margin-bottom: 3rem;
+  }
+  
+  section#compare .col-xl-1 {
+    align-self: center;
+    padding: 0;
+  }
+  
+  section#compare ul {
+    list-style: none;
+    padding: 0;
+  }
+
+  div.card {
+      margin: 0;
+  }
+  /* Player compare */

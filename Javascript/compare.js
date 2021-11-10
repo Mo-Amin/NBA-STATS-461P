@@ -6,18 +6,16 @@ form.addEventListener('submit', (event) => {
     removeChildren(statsRow);
     
     const players = document.querySelectorAll('input[type=text]');
-    const statElements = document.getElementsByClassName('stats');
-
-
 
     let playerData = [];
 
-    players.forEach(async(player) => {
-        let formedName = player.value.split(" ");
+    players.forEach((player) => {
+        let trimmedName = player.value.trim()
+        let formedName = trimmedName.split(" ");
         formedName = formedName.join('_');
 
-        await getData(formedName, playerData).then(() =>{
-            console.log("player data added") 
+        getData(formedName, playerData).then(() =>{
+        console.log("player data added") 
         })
 
     })
@@ -29,14 +27,32 @@ async function getData(playerName, playerArray){
     await fetch(`https://www.balldontlie.io/api/v1/players?search=${playerName}`)
     .then(response => response.json())
     .then(data => { 
+    
+        let colElement = document.createElement('div');
+        colElement.className = "player col-md-4";
+
+        //create card
+        let card = document.createElement('div');
+        card.className = "card";
+        card.style.width="18rem";
+        card.style.margin="0";
+        let name = document.createElement('h5');
+        name.className = "card-title";
+        name.innerHTML= `${data.data[0].first_name} ${data.data[0].last_name}`;
+        card.appendChild(name);
+        colElement.appendChild(card);
+        
+        
+        
         fetch(`https://www.balldontlie.io/api/v1/season_averages?season=2021&player_ids[]=${data.data[0].id}`)
         .then(response => response.json())
         .then(data => {
+            
+            // let colElement = document.createElement('div');
 
-            let colElement = document.createElement('div');
-
-            colElement.className = "player col-md-4";
+            // colElement.className = "player col-md-4";
             let list = document.createElement('ul');
+            list.className = "list-group"
 
             let ppg = document.createElement('li');
             ppg.innerHTML = "PPG: " + data.data[0].pts;
@@ -50,12 +66,15 @@ async function getData(playerName, playerArray){
             let threePt = document.createElement('li');
             threePt.innerHTML = "THREE POINTERS: " + data.data[0].fg3m;
 
-            list.appendChild(ppg);
-            list.appendChild(ast);
-            list.appendChild(rbg);
-            list.appendChild(threePt);
-            colElement.appendChild(list);
+            list.append(ppg);
+            list.append(ast);
+            list.append(rbg);
+            list.append(threePt);
+            
+            card.append(list);
+            colElement.append(card)
             statsRow.appendChild(colElement);
+        
             
         })
     });
