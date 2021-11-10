@@ -1,5 +1,6 @@
 const form = document.querySelector("form");
 let statsRow = document.getElementById("statsRow");
+
 form.addEventListener('submit', (event) => {
     event.preventDefault();
 
@@ -10,76 +11,96 @@ form.addEventListener('submit', (event) => {
     let playerData = [];
 
     players.forEach((player) => {
+
+        let nameObj = {};
         let trimmedName = player.value.trim()
         let formedName = trimmedName.split(" ");
-        formedName = formedName.join('_');
 
-        getData(formedName, playerData).then(() =>{
-        console.log("player data added") 
-        })
+        nameObj.firstName = formedName[0];
+        nameObj.lastName = formedName[1];
 
+        getData(nameObj);
     })
+
+    //THIS WAS FOR ADDING A 'vs' BETWEEN THE PLAYER CARDS, MAYBE DO LATER?
+    // let vsCol = document.createElement('div');
+    // vsCol.className="col-xl-4 order-xl-2";
+    // let vs = document.createElement('h2');
+    // vs.textContent = "VS";
+    // vsCol.appendChild(vs);
+    // statsRow.append(vsCol);
    
 })
 
-async function getData(playerName, playerArray){
-    
-    await fetch(`https://www.balldontlie.io/api/v1/players?search=${playerName}`)
-    .then(response => response.json())
-    .then(data => { 
-    
-        let colElement = document.createElement('div');
-        colElement.className = "player col-md-4";
 
-        //create card
-        let card = document.createElement('div');
-        card.className = "card";
-        card.style.width="18rem";
-        card.style.margin="0";
-        let name = document.createElement('h5');
-        name.className = "card-title";
-        name.innerHTML= `${data.data[0].first_name} ${data.data[0].last_name}`;
-        card.appendChild(name);
-        colElement.appendChild(card);
-        
-        
-        
-        fetch(`https://www.balldontlie.io/api/v1/season_averages?season=2021&player_ids[]=${data.data[0].id}`)
-        .then(response => response.json())
-        .then(data => {
+async function getData(playerName) {
+   await fetch("https://data.nba.net/data/10s/prod/v1/2021/players.json")
+  .then((response) => response.json())
+  .then((data) =>
+    data.league.standard.forEach((player) => {
+        if(player.firstName.toLowerCase() == playerName.firstName.toLowerCase() && player.lastName.toLowerCase() == playerName.lastName.toLowerCase()) {
+            const playerId = player.personId;
+            const playerPhoto = `https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/260x190/${playerId}.png`;
             
-            // let colElement = document.createElement('div');
+            fetch(`https://data.nba.net/data/10s/prod/v1/2021/players/${playerId}_profile.json`)
+            .then(response => response.json())
+            .then(data => {
+                console.log(data);
+                let stats = data.league.standard.stats.latest;
 
-            // colElement.className = "player col-md-4";
-            let list = document.createElement('ul');
-            list.className = "list-group"
+                let colElement = document.createElement('div');
+                colElement.className = "player col-md-4";
 
-            let ppg = document.createElement('li');
-            ppg.innerHTML = "PPG: " + data.data[0].pts;
 
-            let ast = document.createElement('li');
-            ast.innerHTML = "ASSISTS: " + data.data[0].ast;
+                let card = document.createElement('div');
+                card.className = "card";
+                card.style.margin="0";
 
-            let rbg = document.createElement('li');
-            rbg.innerHTML = "REBOUNDS: " + data.data[0].reb;
+                //create img element and add player photo
+                let pic = document.createElement('img');
+                pic.src= playerPhoto;
 
-            let threePt = document.createElement('li');
-            threePt.innerHTML = "THREE POINTERS: " + data.data[0].fg3m;
+                let name = document.createElement('h5');
+                name.className = "card-title";
+                name.innerHTML= `${player.firstName} ${player.lastName}`;
+                card.appendChild(pic);
+                card.appendChild(name);
+                colElement.appendChild(card);
+                statsRow.append(colElement)
 
-            list.append(ppg);
-            list.append(ast);
-            list.append(rbg);
-            list.append(threePt);
-            
-            card.append(list);
-            colElement.append(card)
-            statsRow.appendChild(colElement);
-        
-            
-        })
-    });
 
-    
+                //stats
+
+                let list = document.createElement('ul');
+                list.className = "list-group"
+
+                let ppg = document.createElement('li');
+                ppg.innerHTML = "PPG: " + stats.ppg;
+
+                let ast = document.createElement('li');
+                ast.innerHTML = "ASSISTS: " + stats.apg;
+
+                let rbg = document.createElement('li');
+                rbg.innerHTML = "REBOUNDS: " + stats.rpg;
+
+                let threePt = document.createElement('li');
+                threePt.innerHTML = "MINUTES PER GAME: " + stats.mpg;
+
+                list.append(ppg);
+                list.append(ast);
+                list.append(rbg);
+                list.append(threePt);
+
+                card.append(list);
+                colElement.append(card)
+                statsRow.appendChild(colElement);
+
+            })
+            .catch(e => console.log())
+
+        }
+    })
+  )
 }
 
 let removeChildren = (parent) => {
