@@ -69,13 +69,14 @@ section {
 /* Featured player styles */
 
 section#featured {
-  height: 100%;
+  height: 100vh;
   width: 100%;
   background: rgba(46, 49, 49, 0.85);
   /* color: rgba(189, 195, 199, 1); */
   color: white;
   font-size: 1rem;
   margin: 0;
+  padding-top: 6rem;
   padding-bottom: 3rem;
   padding-top: 100px;
 }
@@ -115,7 +116,8 @@ section#featured {
 }
 
 @media (max-width: 767px) {
-  section {
+  section#feautured {
+    height: 100%;
     width: fit-content;
   }
 
@@ -127,5 +129,4 @@ section#featured {
     margin: 0 auto;
   }
 }
-
 /* Featured player styles */
