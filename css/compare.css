@@ -59,16 +59,24 @@
 
 section#compare {
     text-align: center;
-    width: 80%;
+    width: 100%;
+    height: 100vh;
     margin: 0 auto;
     padding: 0;
+    background: black;
+    color: white;
+    padding-top: 5rem;
   }
+
   #compare container {
     width: 100%;
+
   }
   
-  input[type=submit] {
-    margin-top: 1rem;
+  input[type=submit], input[type=reset] {
+    margin: 1rem 0;
+    width: 12rem
+
   }
   
   section#compare h2 {
@@ -78,6 +86,10 @@ section#compare {
     font-weight: bold;
   }
   
+  section#compare .row:nth-child(1) {
+    animation: fadeIn;
+    animation-duration: 1s;
+  }
   section#compare .row:nth-child(1) h1 {
     margin-bottom: 3rem;
   }
@@ -93,6 +105,65 @@ section#compare {
   }
 
   div.card {
-      margin: 0;
+    color: black;
+    margin: 0;
   }
+
+  #statsRow .col-md-3 {
+    animation: fadeIn;
+    animation-duration: 1s;
+  }
+
+
+  @media(max-width: 385px ) {
+
+    container {
+      height: fit-content
+    }
+
+    input[type=submit] {
+      margin-bottom: 0;
+    }
+     input[type=reset] {
+      margin-top: .5rem;
+    }
+
+    input[type=text]:nth-of-type(2) {
+      margin-top: .5rem
+    }
+
+    #compare {
+      height: fit-content;
+    }
+
+    #statsRow {
+      padding: 0 1rem;
+      background-color: black;
+    }
+
+    .card h5 {
+      margin: .75rem;
+    }
+    .card {
+      padding: 1rem 0;
+      
+    }
+    #statsRow .col-md-3 {
+      padding: .5rem 0;
+    }
+  
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0%;
+    }
+
+    to {
+      opacity: 100%;
+    }
+  }
+
+  
+
   /* Player compare */

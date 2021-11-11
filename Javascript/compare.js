@@ -49,7 +49,8 @@ async function getData(playerName) {
                 let stats = data.league.standard.stats.latest;
 
                 let colElement = document.createElement('div');
-                colElement.className = "player col-md-4";
+                colElement.className = "player col-md-3";
+                colElement.style.marginBottom=0;
 
 
                 let card = document.createElement('div');
