@@ -220,6 +220,7 @@ function handleOptionSelection(event) {
         Chart.defaults.global.defaultFontColor = "white";
         Chart.defaults.global.defaultFontSize = 16;
         Chart.defaults.global.defaultFontStyle = "bold";
+
         let chart = new Chart(StatChart, {
           type: "bar",
           data: {
@@ -237,7 +238,10 @@ function handleOptionSelection(event) {
           options: {
             //https://www.chartjs.org/docs/2.8.0/
             scales: { yAxes: [{ ticks: { beginAtZero: true } }] },
+            title: { display: true, text: `${this.value}` },
             legend: {
+              display: false,
+
               label: {
                 fontColor: "white",
               },
@@ -283,18 +287,39 @@ function handleClick(event) {
     .then((response) => response.json())
     .then((data) => {
       //Find player and start displaying his Information
+      console.log(data.league.standard);
       data.league.standard.forEach((element) => {
         if (element.personId == id) {
           console.log(element.firstName);
           row.remove();
+
+          let popup_title = document.querySelector(".modal-title");
+          popup_title.textContent = `#${element.jersey} ${element.firstName} ${element.lastName}`;
+          let popup_body = document.querySelector(".modal-body");
+          let str = `<b>Country:</b> ${element.country}<br/><br/><b>DOB:</b> ${element.dateOfBirthUTC}<br/><br/><b>Position:</b> ${element.teamSitesOnly.posFull}<br/><br/><b>Height:</b> ${element.heightFeet}'${element.heightInches} (${element.heightMeters}m)<br/><br/><b>Weight:</b> ${element.weightPounds}lbs (${element.weightKilograms}kg)<br/><br/><b>HS/College/Pro:</b> ${element.collegeName}<br/><br/>`;
+          str +=
+            element.draft.pickNum === ""
+              ? `<b>Draft:</b> Undrafted (<b>Debuted:</b> ${element.nbaDebutYear})<br/><br/>`
+              : `<b>Draft:</b> ${element.draft.seasonYear} <b>R:</b> ${element.draft.roundNum} <b>Pick</b> ${element.draft.pickNum}<br/><br/>`;
+          str += `<b>Professional Experience:</b> ${element.yearsPro} years<br/><br/><b>Teams:</b><br/>`;
+
+          element.teams.forEach((team) => {
+            str += `<img src='https://cdn.nba.com/logos/nba/${team.teamId}/primary/D/logo.svg' width='50px'/> --> <b>${team.seasonStart} - ${team.seasonEnd} </b><br/>`;
+          });
+
+          popup_body.innerHTML = str;
           let info_section = document.querySelector("#player_info");
 
           let player_image = document.createElement("img");
+          player_image.setAttribute("class", "PlayerProfilePic");
 
           player_image.src = `https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/260x190/${element.personId}.png`;
+          player_image.alt = `Picture of ${element.firstName} ${element.lastName} at Media day`;
 
           let team_image = document.createElement("img");
+          team_image.setAttribute("class", "PlayerProfileTeamPic");
           team_image.src = `https://cdn.nba.com/logos/nba/${element.teamId}/primary/D/logo.svg`;
+          team_image.alt = `Picture of the team ${element.firstName} ${element.lastName} is on`;
           //Just temporary use CSS instead
           //Just add classes for player images and team images
           if (window.screen.width < 600) {
@@ -304,13 +329,51 @@ function handleClick(event) {
           } else {
             team_image.width = 150;
           }
-          info_section.append(player_image);
+          //info_section.append(player_image);
+          document.querySelector("#btnModal").append(player_image);
 
           info_section.append(team_image);
 
+          let profile_information = document.createElement("div");
+          profile_information.setAttribute("id", "Player_Profile_info");
+          info_section.append(profile_information);
+
           let h1 = document.createElement("h1");
+          h1.setAttribute("id", "Player_Profile_Name");
+
           h1.textContent = `${element.firstName} ${element.lastName}`;
-          info_section.append(h1);
+          profile_information.append(h1);
+
+          let h3 = document.createElement("h3");
+          h3.setAttribute("class", "Player_Profile_Desc");
+          h3.textContent = `#${element.jersey} | ${element.teamSitesOnly.posFull} | ${element.heightFeet}'${element.heightInches} `;
+          profile_information.append(h3);
+
+          let h5 = document.createElement("h5");
+          h5.setAttribute("class", "Player_Profile_Extra");
+          h5.setAttribute("id", "Player_Profile_Country");
+          h5.textContent = `Country: ${element.country}`;
+          profile_information.append(h5);
+
+          let h4 = document.createElement("h4");
+          h4.setAttribute("class", "Player_Profile_Extra");
+          h4.setAttribute("id", "Player_collegeBigScreen");
+
+          if (element.draft.roundNum === "")
+            h4.textContent = `College/HS: ${element.collegeName} | Draft: Undrafted`;
+          else
+            h4.textContent = `College/HS: ${element.collegeName} | Draft: ${element.draft.seasonYear} R:${element.draft.roundNum} Pick ${element.draft.pickNum}`;
+
+          profile_information.append(h4);
+          h4 = document.createElement("h4");
+          h4.setAttribute("class", "Player_Profile_Extra");
+          h4.setAttribute("id", "Player_draft");
+
+          if (element.draft.roundNum === "")
+            h4.textContent = `Draft: Undrafted`;
+          else
+            h4.textContent = `Draft: ${element.draft.seasonYear} R:${element.draft.roundNum} Pick ${element.draft.pickNum}`;
+          profile_information.append(h4);
         }
       });
       return fetch(urlPlayerStats);

@@ -12,6 +12,7 @@
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
     />
     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
     <script
       src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"
       integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p"
@@ -71,30 +72,74 @@
       </nav>
     </header>
     <div id="player_profile">
-      <section id="player_info"></section>
+      <section id="player_info">
+        <!-- Modal FROM https://getbootstrap.com/docs/5.1/components/modal/ -->
+        <button
+          type="button"
+          class="btn btn-primary"
+          id="btnModal"
+          data-bs-toggle="modal"
+          data-bs-target="#exampleModal"
+        ></button>
+
+        <!-- Modal -->
+        <div
+          class="modal fade"
+          id="exampleModal"
+          tabindex="-1"
+          aria-labelledby="exampleModalLabel"
+          aria-hidden="true"
+        >
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                <button
+                  type="button"
+                  class="btn-close"
+                  data-bs-dismiss="modal"
+                  aria-label="Close"
+                ></button>
+              </div>
+              <div class="modal-body">...</div>
+              <div class="modal-footer">
+                <button
+                  type="button"
+                  class="btn btn-secondary"
+                  data-bs-dismiss="modal"
+                >
+                  Close
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
     </div>
     <section id="table">
-      <table cellpadding="15" id="statTable">
-        <!-- HEADING OF TABLE -->
-        <thead>
-          <tr id="header-row">
-            <th id="season_Column">Season</th>
-            <th>GP</th>
-            <th>GS</th>
-            <th>MIN</th>
-            <th>PTS</th>
-            <th>AST</th>
-            <th>REB</th>
-            <th>BLK</th>
-            <th>STL</th>
-            <th>TO</th>
-            <th>FT%</th>
-            <th>FG%</th>
-          </tr>
-        </thead>
-        <!-- FILL THE BODY OF TABLE WITH ROWS -->
-        <tbody id="tableRows"></tbody>
-      </table>
+      <div id="tabless">
+        <table cellpadding="15" id="statTable">
+          <!-- HEADING OF TABLE -->
+          <thead>
+            <tr id="header-row">
+              <th id="season_Column">Season</th>
+              <th>GP</th>
+              <th>GS</th>
+              <th>MIN</th>
+              <th>PTS</th>
+              <th>AST</th>
+              <th>REB</th>
+              <th>BLK</th>
+              <th>STL</th>
+              <th>TO</th>
+              <th>FT%</th>
+              <th>FG%</th>
+            </tr>
+          </thead>
+          <!-- FILL THE BODY OF TABLE WITH ROWS -->
+          <tbody id="tableRows"></tbody>
+        </table>
+      </div>
 
       <div id="Graphs">
         <label id="Option_label" for="Graph_option"
