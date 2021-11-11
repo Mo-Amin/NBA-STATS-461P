@@ -1,6 +1,8 @@
 const form = document.querySelector("form");
 let statsRow = document.getElementById("statsRow");
 
+const chartContainer = document.querySelector(".chart-container");
+
 form.addEventListener('submit', (event) => {
     event.preventDefault();
 
@@ -8,7 +10,38 @@ form.addEventListener('submit', (event) => {
     
     const players = document.querySelectorAll('input[type=text]');
 
-    let playerData = [];
+    //chart configuration
+    const labels = [
+        'PPG',
+        'AST',
+        'RPG',
+        'MIN',
+      ];
+      const data = {
+        labels: labels,
+        datasets: [{
+          label: 'My First dataset',
+          backgroundColor: 'rgb(153, 204, 255)',
+          borderColor: 'rgb(255, 99, 132)',
+          data: [0, 10, 5, 2, 20, 30, 45],
+          
+        },
+        {
+            label: 'My First dataset',
+            backgroundColor: 'rgb(255, 255, 153)',
+            borderColor: 'rgb(255, 99, 132)',
+            data: [8, 10, 5, 2, 20, 30, 45],
+            
+          },
+          
+        ]
+      };
+
+    const config = {
+        type: 'bar',
+        data: data,
+        options: {}
+      };
 
     players.forEach((player) => {
 
@@ -20,7 +53,15 @@ form.addEventListener('submit', (event) => {
         nameObj.lastName = formedName[1];
 
         getData(nameObj);
+
     })
+
+    const myChart = new Chart(
+        document.getElementById('myChart'),
+        config
+      );
+
+    chartContainer.style.display = "block";
 
     //THIS WAS FOR ADDING A 'vs' BETWEEN THE PLAYER CARDS, MAYBE DO LATER?
     // let vsCol = document.createElement('div');
