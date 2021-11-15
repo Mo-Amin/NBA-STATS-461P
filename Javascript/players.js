@@ -296,12 +296,12 @@ function handleClick(event) {
           let popup_title = document.querySelector(".modal-title");
           popup_title.textContent = `#${element.jersey} ${element.firstName} ${element.lastName}`;
           let popup_body = document.querySelector(".modal-body");
-          let str = `<b>Country:</b> ${element.country}<br/><br/><b>DOB:</b> ${element.dateOfBirthUTC}<br/><br/><b>Position:</b> ${element.teamSitesOnly.posFull}<br/><br/><b>Height:</b> ${element.heightFeet}'${element.heightInches} (${element.heightMeters}m)<br/><br/><b>Weight:</b> ${element.weightPounds}lbs (${element.weightKilograms}kg)<br/><br/><b>HS/College/Pro:</b> ${element.collegeName}<br/><br/>`;
+          let str = `<b>Country:</b> ${element.country}<br/><br/><b>DOB (YYYY-MM-DD):</b> ${element.dateOfBirthUTC}<br/><br/><b>Position:</b> ${element.teamSitesOnly.posFull}<br/><br/><b>Height:</b> ${element.heightFeet}'${element.heightInches} (${element.heightMeters}m)<br/><br/><b>Weight:</b> ${element.weightPounds}lbs (${element.weightKilograms}kg)<br/><br/><b>HS/College/Pro:</b> ${element.collegeName}<br/><br/>`;
           str +=
             element.draft.pickNum === ""
               ? `<b>Draft:</b> Undrafted (<b>Debuted:</b> ${element.nbaDebutYear})<br/><br/>`
               : `<b>Draft:</b> ${element.draft.seasonYear} <b>R:</b> ${element.draft.roundNum} <b>Pick</b> ${element.draft.pickNum}<br/><br/>`;
-          str += `<b>Professional Experience:</b> ${element.yearsPro} years<br/><br/><b>Teams:</b><br/>`;
+          str += `<b>Professional Experience (Years):</b> ${element.yearsPro}<br/><br/><b>Teams:</b><br/>`;
 
           element.teams.forEach((team) => {
             str += `<img src='https://cdn.nba.com/logos/nba/${team.teamId}/primary/D/logo.svg' width='50px'/> --> <b>${team.seasonStart} - ${team.seasonEnd} </b><br/>`;
@@ -322,6 +322,8 @@ function handleClick(event) {
           team_image.alt = `Picture of the team ${element.firstName} ${element.lastName} is on`;
           //Just temporary use CSS instead
           //Just add classes for player images and team images
+
+          /*
           if (window.screen.width < 600) {
             player_image.width = 130;
             player_image.height = 95;
@@ -329,6 +331,8 @@ function handleClick(event) {
           } else {
             team_image.width = 150;
           }
+          */
+
           //info_section.append(player_image);
           document.querySelector("#btnModal").append(player_image);
 
