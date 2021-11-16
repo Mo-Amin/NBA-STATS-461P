@@ -318,6 +318,9 @@ function handleClick(event) {
 
           let team_image = document.createElement("img");
           team_image.setAttribute("class", "PlayerProfileTeamPic");
+          if (element.teamId === "") {
+            element.teamId = element.teams[element.teams.length - 1].teamId;
+          }
           team_image.src = `https://cdn.nba.com/logos/nba/${element.teamId}/primary/D/logo.svg`;
           team_image.alt = `Picture of the team ${element.firstName} ${element.lastName} is on`;
           //Just temporary use CSS instead

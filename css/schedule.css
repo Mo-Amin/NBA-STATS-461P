@@ -8,6 +8,11 @@ section:not(#Date) {
   background: linear-gradient(white, black);
   border: 0.5px solid red;
   box-shadow: 5px 5px red;
+
+  /*
+  margin: 0 auto;
+  margin-bottom: 50px;
+  */
 }
 
 #Date {
@@ -15,14 +20,18 @@ section:not(#Date) {
   justify-content: center;
   background-color: black;
 }
-#btnModal {
+.btn.btn-primary {
   display: flex;
   background: none;
   border: none;
 }
 
-#btnModal:focus {
+.btn.btn-primary:focus {
   box-shadow: none;
+  background: none;
+}
+.btn.btn-primary:hover {
+  background: none;
 }
 
 /*
@@ -47,16 +56,29 @@ figcaption {
   padding: 0;
   width: 25vw;
 }
-.col-4 {
+
+.col-12 {
   display: flex;
   justify-content: center;
   align-items: center;
-  color: white;
 }
+
 #atCharacter {
   height: 100%;
   align-self: center;
-  font-size: 60px;
+
+  font-size: 40px;
   font-weight: bold;
-  text-shadow: 3px 3px black;
+  text-shadow: 2px 2px black;
+}
+
+@media (max-width: 540px) {
+  #atCharacter {
+    font-size: 30px;
+  }
+}
+@media (max-width: 480px) {
+  #atCharacter {
+    font-size: 25px;
+  }
 }

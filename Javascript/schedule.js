@@ -55,12 +55,25 @@ function handleDate() {
       .then((response) => response.json())
       .then((data) => {
         data.games.forEach((element) => {
+          let info = null;
+          if (!element.isGameActivated && element.gameDuration.hours === "") {
+            info = element.startTimeEastern;
+            if (element.watch.broadcast.broadcasters.national.length === 0) {
+              info += `<br/> League Pass`;
+            } else {
+              info += `<br/> ${element.watch.broadcast.broadcasters.national[0].shortName}`;
+            }
+          } else {
+            info = `${element.vTeam.score} - ${element.hTeam.score}`;
+            if (element.isGameActivated)
+              info += `<br/> Q${element.period.current} ${element.clock}`;
+          }
           let section = document.createElement("section");
-          section.innerHTML = `<div class="col-8"> 
+          section.innerHTML = `<div class="col-12"> 
           <button
             type="button"
             class="btn btn-primary"
-            id="btnModal"
+            id="${element.gameId}"
             data-bs-toggle="modal"
             data-bs-target="#exampleModal"
           >
@@ -74,7 +87,7 @@ function handleDate() {
               <figcaption>${element.vTeam.win}-${element.vTeam.loss}</figcaption>
               
             </figure>
-            <p id="atCharacter">@<p/>
+            <p id="atCharacter">${info}<p/>
             <figure>
               <img
                 src="https://cdn.nba.com/logos/nba/${element.hTeam.teamId}/primary/D/logo.svg"
@@ -117,8 +130,7 @@ function handleDate() {
               </div>
             </div>
           </div>
-        </div>
-        <div class="col-4">hi<br/>mo</div>`;
+        </div>`;
           document.getElementById("Games").append(section);
         });
         console.log(data);
