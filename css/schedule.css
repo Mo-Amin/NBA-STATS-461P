@@ -5,7 +5,7 @@
 }
 section:not(#Date) {
   /*background-color: rgb(185, 185, 185);*/
-  background: linear-gradient(white, black);
+  background: linear-gradient(rgb(206, 206, 206), black);
   border: 0.5px solid red;
   box-shadow: 5px 5px red;
 

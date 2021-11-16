@@ -60,6 +60,7 @@ function handleDate() {
       .then((response) => response.json())
       .then((data) => {
         data.games.forEach((element) => {
+          //Game time, broadcast, status
           let info = null;
           if (!element.isGameActivated && element.gameDuration.hours === "") {
             info = element.startTimeEastern;
@@ -78,14 +79,18 @@ function handleDate() {
               info += `<br/> Q${element.period.current} ${element.clock}`;
             else info += `<br/> Final`;
           }
+
+          let gamedetails = `<b>City:</b> ${element.arena.city}<br/><b>Arena:</b> ${element.arena.name}<br/>`;
+          if (element.attendance !== "")
+            gamedetails += `<b>Game Attendance:</b> ${element.attendance}<br/>`;
+          gamedetails += `<a href='${element.tickets.leagGameInfo}'><b>Tickets</b></a><br/>`;
           let section = document.createElement("section");
           section.innerHTML = `<div class="col-12"> 
           <button
             type="button"
             class="btn btn-primary"
-            id="${element.gameId}"
             data-bs-toggle="modal"
-            data-bs-target="#exampleModal"
+            data-bs-target="#exampleModal${element.gameId}"
           >
             <figure>
               <img
@@ -111,15 +116,22 @@ function handleDate() {
     
           <div
             class="modal fade"
-            id="exampleModal"
+            id="exampleModal${element.gameId}"
             tabindex="-1"
             aria-labelledby="exampleModalLabel"
             aria-hidden="true"
           >
             <div class="modal-dialog">
               <div class="modal-content">
-                <div class="modal-header">
-                  <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                <div class="modal-header" id=${element.gameId}>
+                  <h5 class="modal-title" id="exampleModalLabel">
+                  ${element.vTeam.triCode}<img
+                  src="https://cdn.nba.com/logos/nba/${element.vTeam.teamId}/primary/D/logo.svg"
+                  width="100"
+                  height="100"/> @ <img
+                  src="https://cdn.nba.com/logos/nba/${element.hTeam.teamId}/primary/D/logo.svg"
+                  width="100"
+                  height="100"/>${element.hTeam.triCode} </h5>
                   <button
                     type="button"
                     class="btn-close"
@@ -127,7 +139,7 @@ function handleDate() {
                     aria-label="Close"
                   ></button>
                 </div>
-                <div class="modal-body">...</div>
+                <div class="modal-body">${gamedetails}</div>
                 <div class="modal-footer">
                   <button
                     type="button"
@@ -143,6 +155,7 @@ function handleDate() {
         </div>`;
           document.getElementById("Games").append(section);
         });
+
         console.log(data);
       })
       .catch((error) => console.log(error));
