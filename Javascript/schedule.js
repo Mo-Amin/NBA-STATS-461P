@@ -20,6 +20,14 @@ for (let i = 1; i < 13; ++i) {
 
 //https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/date
 let date = document.querySelector("#Date");
+console.log(date.value);
+let tmp = new Date();
+
+let datetmp = `${tmp.getFullYear()}-`;
+datetmp += `${tmp.getMonth() + 1}-`;
+datetmp += `${tmp.getDate()}`;
+console.log(datetmp);
+
 //https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/getFullYear
 let current_year = new Date().getFullYear();
 let date_input = document.createElement("input");
@@ -27,24 +35,21 @@ date_input.type = "date";
 date_input.min = `${current_year}-01-01`;
 date_input.max = `${current_year + 1}-12-31`;
 date_input.id = "Game_date";
+date_input.value = datetmp;
+
 date.append(date_input);
 
 date_input.addEventListener("input", handleDate);
 let date_chosen = null;
 
-/*
-let img = document.createElement("img");
-img.src = "https://cdn.nba.com/logos/nba/1610612757/primary/D/logo.svg";
-document.querySelector(
-  "#btnModal"
-).innerHTML = `<img src="https://cdn.nba.com/logos/nba/1610612757/primary/D/logo.svg" width='200px'height='200px'/>`;
-*/
-
 function handleDate() {
-  document.getElementById("Games").remove();
-  let gameDiv = document.createElement("div");
-  gameDiv.id = "Games";
-  document.getElementById("body").append(gameDiv);
+  let games = document.getElementById("Games") === null;
+  if (!games) {
+    document.getElementById("Games").remove();
+    let gameDiv = document.createElement("div");
+    gameDiv.id = "Games";
+    document.getElementById("body").append(gameDiv);
+  }
   console.log(date_input.value.replaceAll("-", ""));
   // BOXSCORE URL = http://data.nba.net/data/10s/prod/v1/{data}/{game_Id}_boxscore.json
   //Make sure we aren't checking the same date as previous
@@ -65,8 +70,13 @@ function handleDate() {
             }
           } else {
             info = `${element.vTeam.score} - ${element.hTeam.score}`;
-            if (element.isGameActivated)
+            if (element.isGameActivated && element.period.isHalftime)
+              info += "<br/> Halftime";
+            else if (element.isGameActivated && element.period.isEndOfPeriod)
+              info += `<br/> Q${element.period.current} Ended`;
+            else if (element.isGameActivated)
               info += `<br/> Q${element.period.current} ${element.clock}`;
+            else info += `<br/> Final`;
           }
           let section = document.createElement("section");
           section.innerHTML = `<div class="col-12"> 
@@ -138,3 +148,4 @@ function handleDate() {
       .catch((error) => console.log(error));
   }
 }
+handleDate();
