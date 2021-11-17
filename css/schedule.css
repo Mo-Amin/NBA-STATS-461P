@@ -87,7 +87,9 @@ figcaption {
 
 table {
   display: block;
-  width: 100%;
+  margin: 0 auto;
+  margin-top: 10px;
+  width: 94%;
   height: 50vh;
   overflow-x: scroll;
   border-collapse: collapse;
@@ -120,4 +122,7 @@ tr:hover {
 
 #header-row > th {
   color: white;
+}
+h1 {
+  text-align: center;
 }

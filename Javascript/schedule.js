@@ -140,7 +140,7 @@ function handleDate() {
                     aria-label="Close"
                   ></button>
                 </div>
-                <div class="modal-body">${gamedetails}<div id=ModalBody${element.gameId}></div></div>
+                <div class="modal-body">${gamedetails} <div id=ModalBody${element.gameId}></div></div>
                 <div class="modal-footer">
                   <button
                     type="button"
@@ -181,11 +181,12 @@ function handleClick() {
   fetch(boxscoreURL)
     .then((response) => response.json())
     .then((data) => {
+      console.log(data);
       if (data.stats !== undefined) {
         console.log(data);
         let hteamId = data.basicGameData.hTeam.teamId;
         let vteamId = data.basicGameData.vTeam.teamId;
-        ModalBody.innerHTML = `<table cellpadding="15" id="HomeTable">
+        ModalBody.innerHTML = `<h1>${data.basicGameData.hTeam.triCode}</h1><table cellpadding="15" id="HomeTable">
       <!-- HEADING OF TABLE -->
       <thead>
         <tr id="header-row">
@@ -208,12 +209,39 @@ function handleClick() {
       </thead>
       <!-- FILL THE BODY OF TABLE WITH ROWS -->
       <tbody id="HomeTeamrows${this.id}"></tbody>
+    </table>
+    <h1>${data.basicGameData.vTeam.triCode}</h1><table cellpadding="15" id="VisitoTable">
+      <!-- HEADING OF TABLE -->
+      <thead>
+        <tr id="header-row">
+          <th>Player</th>
+          <th>MIN</th>
+          <th>PTS</th>
+          <th>AST</th>
+          <th>REB</th>
+          <th>BLK</th>
+          <th>STL</th>
+          <th>FTM</th>
+          <th>FTA</th>
+          <th>FT%</th>
+          <th>FGM</th>
+          <th>FGA</th>
+          <th>FG%</th>
+          <th>TO</th>
+          <th>PF</th>
+        </tr>
+      </thead>
+      <!-- FILL THE BODY OF TABLE WITH ROWS -->
+      <tbody id="VisterTeamrows${this.id}"></tbody>
     </table>`;
         let team = null;
         data.stats.activePlayers.forEach((element) => {
-          if (element.teamId === hteamId && element.dnp === "") {
+          if (element.teamId === hteamId) {
             team = document.getElementById(`HomeTeamrows${this.id}`);
-
+          } else {
+            team = document.getElementById(`VisterTeamrows${this.id}`);
+          }
+          if (element.dnp === "") {
             team.innerHTML += `
           <tr>
           <td><b>#${element.jersey} ${element.firstName} ${element.lastName}</b></td>
