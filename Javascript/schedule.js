@@ -189,7 +189,6 @@ function handleClick() {
       <!-- HEADING OF TABLE -->
       <thead>
         <tr id="header-row">
-          <th id="season_Column">Season</th>
           <th>Player</th>
           <th>MIN</th>
           <th>PTS</th>
@@ -197,19 +196,44 @@ function handleClick() {
           <th>REB</th>
           <th>BLK</th>
           <th>STL</th>
-          <th>FTA</th>
           <th>FTM</th>
+          <th>FTA</th>
           <th>FT%</th>
-          <th>FGA</th>
           <th>FGM</th>
+          <th>FGA</th>
           <th>FG%</th>
           <th>TO</th>
           <th>PF</th>
         </tr>
       </thead>
       <!-- FILL THE BODY OF TABLE WITH ROWS -->
-      <tbody id="tableRows"></tbody>
+      <tbody id="HomeTeamrows${this.id}"></tbody>
     </table>`;
+        let team = null;
+        data.stats.activePlayers.forEach((element) => {
+          if (element.teamId === hteamId && element.dnp === "") {
+            team = document.getElementById(`HomeTeamrows${this.id}`);
+
+            team.innerHTML += `
+          <tr>
+          <td><b>#${element.jersey} ${element.firstName} ${element.lastName}</b></td>
+          <td>${element.min}</td>
+          <td>${element.points}</td>
+          <td>${element.assists}</td>
+          <td>${element.totReb}</td>
+          <td>${element.blocks}</td>
+          <td>${element.steals}</td>
+          <td>${element.ftm}</td>
+          <td>${element.fta}</td>
+          <td>${element.ftp}</td>
+          <td>${element.fgm}</td>
+          <td>${element.fga}</td>
+          <td>${element.fgp}</td>
+          <td>${element.turnovers}</td>
+          <td>${element.pFouls}</td>
+          </tr>`;
+          }
+        });
       }
     })
     .catch((error) => console.log(error));
