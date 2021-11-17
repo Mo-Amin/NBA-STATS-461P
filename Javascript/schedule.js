@@ -89,6 +89,7 @@ function handleDate() {
           <button
             type="button"
             class="btn btn-primary"
+            id=${element.gameId}
             data-bs-toggle="modal"
             data-bs-target="#exampleModal${element.gameId}"
           >
@@ -139,7 +140,7 @@ function handleDate() {
                     aria-label="Close"
                   ></button>
                 </div>
-                <div class="modal-body">${gamedetails}</div>
+                <div class="modal-body">${gamedetails}<div id=ModalBody${element.gameId}></div></div>
                 <div class="modal-footer">
                   <button
                     type="button"
@@ -157,8 +158,59 @@ function handleDate() {
         });
 
         console.log(data);
+        let btn = document.querySelectorAll(".btn.btn-primary");
+        console.log(btn);
+
+        for (let i = 0; i < btn.length; ++i) {
+          btn[i].addEventListener("click", handleClick);
+        }
       })
       .catch((error) => console.log(error));
   }
 }
 handleDate();
+
+function handleClick() {
+  console.log(this.id);
+  let ModalBody = document.getElementById(`ModalBody${this.id}`);
+
+  //ModalBody.innerHTML = "MOOO";
+
+  let dateChosen = date_input.value.replaceAll("-", "");
+  let boxscoreURL = `http://data.nba.net/data/10s/prod/v1/${dateChosen}/${this.id}_boxscore.json`;
+  fetch(boxscoreURL)
+    .then((response) => response.json())
+    .then((data) => {
+      if (data.stats !== undefined) {
+        console.log(data);
+        let hteamId = data.basicGameData.hTeam.teamId;
+        let vteamId = data.basicGameData.vTeam.teamId;
+        ModalBody.innerHTML = `<table cellpadding="15" id="HomeTable">
+      <!-- HEADING OF TABLE -->
+      <thead>
+        <tr id="header-row">
+          <th id="season_Column">Season</th>
+          <th>Player</th>
+          <th>MIN</th>
+          <th>PTS</th>
+          <th>AST</th>
+          <th>REB</th>
+          <th>BLK</th>
+          <th>STL</th>
+          <th>FTA</th>
+          <th>FTM</th>
+          <th>FT%</th>
+          <th>FGA</th>
+          <th>FGM</th>
+          <th>FG%</th>
+          <th>TO</th>
+          <th>PF</th>
+        </tr>
+      </thead>
+      <!-- FILL THE BODY OF TABLE WITH ROWS -->
+      <tbody id="tableRows"></tbody>
+    </table>`;
+      }
+    })
+    .catch((error) => console.log(error));
+}

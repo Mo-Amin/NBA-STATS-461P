@@ -82,3 +82,12 @@ figcaption {
     font-size: 25px;
   }
 }
+
+table {
+  display: flex;
+  width: 100%;
+  overflow-x: scroll;
+}
+th {
+  padding: 10px;
+}
