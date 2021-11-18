@@ -126,6 +126,44 @@ tr:hover {
 h1 {
   text-align: center;
 }
-table {
+
+.btn.btn-dark:focus {
+  box-shadow: none;
+}
+.btn.btn-dark:hover {
+  background-color: red;
+  font-weight: bold;
+}
+
+#BoxscoreLabel {
+  font-weight: bold;
+}
+
+.TeamStats {
+  font-weight: bold;
+  font-size: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.Teams {
   display: none;
+}
+.leadersPic {
+  display: flex;
+  width: 130px;
+  height: 95px;
+}
+.leaders {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  border-bottom: 3px double black;
+  width: 100%;
+}
+.LeaderPoints,
+.LeaderRebounds,
+.LeaderAssists {
+  width: 50%;
+  text-align: center;
 }

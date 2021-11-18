@@ -121,8 +121,6 @@ function handleDate() {
                   ></button>
                 </div>
                 <div class="modal-body">${gamedetails}
-                <button type="button" class="btn btn-dark" id='vTeam${element.gameId}'>${element.vTeam.triCode}</button>
-                <button type="button" class="btn btn-dark" id='hTeam${element.gameId}'>${element.hTeam.triCode}</button> 
                 <div id=ModalBody${element.gameId}></div>
                 </div>
                 <div class="modal-footer">
@@ -147,11 +145,6 @@ function handleDate() {
 
         for (let i = 0; i < btn.length; ++i) {
           btn[i].addEventListener("click", handleClick);
-        }
-
-        let boxscoreShowBtn = document.querySelectorAll(".btn.btn-dark");
-        for (let i = 0; i < boxscoreShowBtn.length; ++i) {
-          boxscoreShowBtn[i].addEventListener("click", handleBoxscorebutton);
         }
       })
       .catch((error) => console.log(error));
@@ -179,8 +172,35 @@ function handleClick() {
       if (data.stats !== undefined) {
         console.log(data);
         let hteamId = data.basicGameData.hTeam.teamId;
-        let vteamId = data.basicGameData.vTeam.teamId;
-        ModalBody.innerHTML = `<h1>${data.basicGameData.hTeam.triCode}</h1><table cellpadding="15" id="HomeTable${this.id}">
+        ModalBody.innerHTML = `
+        <div class="leaders"> 
+          <img class ="leadersPic"src = "https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/260x190/${data.stats.hTeam.leaders.points.players[0].personId}.png"/>
+          ${data.stats.hTeam.leaders.points.value}<p class="LeaderPoints">Points</p> ${data.stats.vTeam.leaders.points.value}
+          <img class ="leadersPic"src = "https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/260x190/${data.stats.vTeam.leaders.points.players[0].personId}.png"/>
+        </div>
+        <div class="leaders"> 
+          <img class ="leadersPic"src = "https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/260x190/${data.stats.hTeam.leaders.assists.players[0].personId}.png"/>
+          ${data.stats.hTeam.leaders.assists.value}<p class="LeaderAssists">Assists</p> ${data.stats.vTeam.leaders.assists.value}
+          <img class ="leadersPic"src = "https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/260x190/${data.stats.vTeam.leaders.assists.players[0].personId}.png"/>
+        </div>
+        <div class="leaders"> 
+          <img class ="leadersPic"src = "https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/260x190/${data.stats.hTeam.leaders.rebounds.players[0].personId}.png"/>
+          ${data.stats.hTeam.leaders.rebounds.value}<p class="LeaderRebounds">Rebounds</p> ${data.stats.vTeam.leaders.rebounds.value}
+          <img class ="leadersPic"src = "https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/260x190/${data.stats.vTeam.leaders.rebounds.players[0].personId}.png"/>
+        </div>
+        <h5 id="BoxscoreLabel"><br/>BOXSCORE:</h5>
+        <button type="button" class="btn btn-dark" id='vTeam${this.id}'>${data.basicGameData.vTeam.triCode}</button>
+        <button type="button" class="btn btn-dark" id='hTeam${this.id}'>${data.basicGameData.hTeam.triCode}</button> 
+      <div class="Teams" id="HomeTable${this.id}">
+
+        <div class="TeamStats">
+          <img src="https://cdn.nba.com/logos/nba/${data.basicGameData.hTeam.teamId}/primary/D/logo.svg"
+            width="100"
+            height="100"
+         />
+        ${data.basicGameData.hTeam.triCode}
+        </div>
+      <table cellpadding="15">
       <!-- HEADING OF TABLE -->
       <thead>
         <tr id="header-row">
@@ -204,7 +224,16 @@ function handleClick() {
       <!-- FILL THE BODY OF TABLE WITH ROWS -->
       <tbody id="HomeTeamrows${this.id}"></tbody>
     </table>
-    <h1>${data.basicGameData.vTeam.triCode}</h1><table cellpadding="15" id="VisitorTable${this.id}">
+    </div>
+    <div class="Teams" id="VisitorTable${this.id}">
+      <div class="TeamStats">
+        <img src="https://cdn.nba.com/logos/nba/${data.basicGameData.vTeam.teamId}/primary/D/logo.svg"
+        width="100"
+        height="100"
+        />
+      ${data.basicGameData.vTeam.triCode}
+      </div>
+    <table cellpadding="15">
       <!-- HEADING OF TABLE -->
       <thead>
         <tr id="header-row">
@@ -227,8 +256,14 @@ function handleClick() {
       </thead>
       <!-- FILL THE BODY OF TABLE WITH ROWS -->
       <tbody id="VisterTeamrows${this.id}"></tbody>
-    </table>`;
+    </table>
+    </div>`;
         let team = null;
+        let boxscoreShowBtn = document.querySelectorAll(".btn.btn-dark");
+        for (let i = 0; i < boxscoreShowBtn.length; ++i) {
+          boxscoreShowBtn[i].addEventListener("click", handleBoxscorebutton);
+        }
+
         data.stats.activePlayers.forEach((element) => {
           if (element.teamId === hteamId) {
             team = document.getElementById(`HomeTeamrows${this.id}`);
@@ -267,10 +302,49 @@ function handleBoxscorebutton() {
   console.log(this.id);
   // console.log(this.id.slice(5, this.id.length));
 
-  let table = null;
+  let vtable = document.getElementById(`VisitorTable${GameID}`);
+  let htable = document.getElementById(`HomeTable${GameID}`);
   if (Team === "vTeam") {
+    //If we clicked and want to show
+    if (!vclick) {
+      vtable.style.display = "block";
+      htable.style.display = "none";
+      hclick = false;
+      vclick = true;
+    } else {
+      vtable.style.display = "none";
+      vclick = false;
+    }
+    /*
+    vtable.style.display = "block";
+    htable.style.display = "none";
+    */
+  } else if (Team === "hTeam") {
+    if (!hclick) {
+      htable.style.display = "block";
+      vtable.style.display = "none";
+      vclick = false;
+      hclick = true;
+    } else {
+      htable.style.display = "none";
+      hclick = false;
+    }
+
+    /*
+    htable.style.display = "block";
+    vtable.style.display = "none";
+    */
+  } else {
+    vtable.style.display = "none";
+    htable.style.display = "none";
+  }
+  /*
+  if (Team === "vTeam") {
+    
     table = document.getElementById(`VisitorTable${GameID}`);
     console.log(table.style.display.value);
+    
+   //If it is clicked
     if (!vclick) {
       table.style.display = "block";
       vclick = true;
@@ -290,4 +364,5 @@ function handleBoxscorebutton() {
       hclick = false;
     }
   }
+  */
 }
