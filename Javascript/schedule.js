@@ -1,23 +1,3 @@
-/*
-let months = document.querySelector("#months");
-let days = document.querySelector("#Days");
-
-//Add days
-for (let i = 1; i < 32; ++i) {
-  let tmp = document.createElement("option");
-  tmp.value = `${i}`;
-  tmp.textContent = `${i}`;
-  days.append(tmp);
-}
-
-for (let i = 1; i < 13; ++i) {
-  let tmp = document.createElement("option");
-  tmp.value = `${i}`;
-  tmp.textContent = `${i}`;
-  months.append(tmp);
-}
-*/
-
 //https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/date
 let date = document.querySelector("#Date");
 console.log(date.value);
@@ -140,7 +120,11 @@ function handleDate() {
                     aria-label="Close"
                   ></button>
                 </div>
-                <div class="modal-body">${gamedetails} <div id=ModalBody${element.gameId}></div></div>
+                <div class="modal-body">${gamedetails}
+                <button type="button" class="btn btn-dark" id='vTeam${element.gameId}'>${element.vTeam.triCode}</button>
+                <button type="button" class="btn btn-dark" id='hTeam${element.gameId}'>${element.hTeam.triCode}</button> 
+                <div id=ModalBody${element.gameId}></div>
+                </div>
                 <div class="modal-footer">
                   <button
                     type="button"
@@ -164,13 +148,23 @@ function handleDate() {
         for (let i = 0; i < btn.length; ++i) {
           btn[i].addEventListener("click", handleClick);
         }
+
+        let boxscoreShowBtn = document.querySelectorAll(".btn.btn-dark");
+        for (let i = 0; i < boxscoreShowBtn.length; ++i) {
+          boxscoreShowBtn[i].addEventListener("click", handleBoxscorebutton);
+        }
       })
       .catch((error) => console.log(error));
   }
 }
 handleDate();
 
+let vclick = false;
+let hclick = false;
+
 function handleClick() {
+  vclick = false;
+  hclick = false;
   console.log(this.id);
   let ModalBody = document.getElementById(`ModalBody${this.id}`);
 
@@ -186,7 +180,7 @@ function handleClick() {
         console.log(data);
         let hteamId = data.basicGameData.hTeam.teamId;
         let vteamId = data.basicGameData.vTeam.teamId;
-        ModalBody.innerHTML = `<h1>${data.basicGameData.hTeam.triCode}</h1><table cellpadding="15" id="HomeTable">
+        ModalBody.innerHTML = `<h1>${data.basicGameData.hTeam.triCode}</h1><table cellpadding="15" id="HomeTable${this.id}">
       <!-- HEADING OF TABLE -->
       <thead>
         <tr id="header-row">
@@ -210,7 +204,7 @@ function handleClick() {
       <!-- FILL THE BODY OF TABLE WITH ROWS -->
       <tbody id="HomeTeamrows${this.id}"></tbody>
     </table>
-    <h1>${data.basicGameData.vTeam.triCode}</h1><table cellpadding="15" id="VisitoTable">
+    <h1>${data.basicGameData.vTeam.triCode}</h1><table cellpadding="15" id="VisitorTable${this.id}">
       <!-- HEADING OF TABLE -->
       <thead>
         <tr id="header-row">
@@ -265,4 +259,35 @@ function handleClick() {
       }
     })
     .catch((error) => console.log(error));
+}
+
+function handleBoxscorebutton() {
+  let Team = this.id.slice(0, 5);
+  let GameID = this.id.slice(5, this.id.length);
+  console.log(this.id);
+  // console.log(this.id.slice(5, this.id.length));
+
+  let table = null;
+  if (Team === "vTeam") {
+    table = document.getElementById(`VisitorTable${GameID}`);
+    console.log(table.style.display.value);
+    if (!vclick) {
+      table.style.display = "block";
+      vclick = true;
+    } else {
+      table.style.display = "none";
+      vclick = false;
+    }
+  }
+  if (Team === "hTeam") {
+    table = document.getElementById(`HomeTable${GameID}`);
+    console.log(table.style.display.value);
+    if (!hclick) {
+      table.style.display = "block";
+      hclick = true;
+    } else {
+      table.style.display = "none";
+      hclick = false;
+    }
+  }
 }

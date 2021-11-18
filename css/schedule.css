@@ -126,3 +126,6 @@ tr:hover {
 h1 {
   text-align: center;
 }
+table {
+  display: none;
+}
