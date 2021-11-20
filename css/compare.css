@@ -1,5 +1,4 @@
 * {
-<<<<<<< HEAD
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -10,74 +9,61 @@
     width: 100%;
     background-color: rgba(46, 49, 49, .85);
   }
-=======
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-body {
-  height: 100%;
-  width: 100%;
-  background-color: rgba(46, 49, 49, 0.85);
-}
-header {
-  font-family: Marker Felt;
-  font-size: 24px;
-  font-weight: bold;
-}
-
-.navbar-brand {
-  display: flex;
-  align-items: center;
-}
-.navbar-brand h1 {
-  font-size: 35px;
-}
-
-.nav-item .nav-link:hover {
-  color: red;
-}
-
-.nav-item {
-  margin: 5px;
-}
-.nav-item:hover {
-  border-top: 4px solid orange;
-}
-@media (max-width: 804px) {
->>>>>>> main
   header {
-    font-size: 20px;
+    font-family: Marker Felt;
+    font-size: 24px;
+    font-weight: bold;
   }
-}
-@media (min-width: 964px) {
-  header {
-    font-size: 28px;
+  
+  .navbar-brand {
+    display: flex;
+    align-items: center;
   }
-}
-@media (min-width: 768px) {
-  .navbar-expand-md .navbar-nav .nav-item .nav-link.active {
-    border-bottom: 4px solid red;
+  .navbar-brand h1 {
+    font-size: 35px;
   }
-}
-@media (max-width: 768px) {
+  
+  .nav-item .nav-link:hover {
+    color: red;
+  }
+  
+  .nav-item {
+    margin: 5px;
+  }
   .nav-item:hover {
-    border-bottom: 4px solid orange;
-    border-top: none;
+    border-top: 4px solid orange;
   }
-}
+  @media (max-width: 804px) {
+    header {
+      font-size: 20px;
+    }
+  }
+  @media (min-width: 964px) {
+    header {
+      font-size: 28px;
+    }
+  }
+  @media (min-width: 768px) {
+    .navbar-expand-md .navbar-nav .nav-item .nav-link.active {
+      border-bottom: 4px solid red;
+    }
+  }
+  @media (max-width: 768px) {
+    .nav-item:hover {
+      border-bottom: 4px solid orange;
+      border-top: none;
+    }
+  }
+
 
 /* Player compare */
 
 section#compare {
-<<<<<<< HEAD
     text-align: center;
     width: 100%;
-    height: 100%;
+    height: 100vh;
     margin: 0 auto;
     padding: 0;
-    background: black;
-    color: white;
     padding-top: 5rem;
   }
 
@@ -88,100 +74,49 @@ section#compare {
 
   .col-md {
     padding: 0;
-=======
-  text-align: center;
-  width: 100%;
-  height: 100vh;
-  margin: 0 auto;
-  padding: 0;
-  background: black;
-  color: white;
-  padding-top: 5rem;
-}
+  }
+  
+  input[type=submit], input[type=reset] {
+    margin: 1rem 0;
+    width: 12rem
 
-#compare container {
-  width: 100%;
-}
-
-input[type="submit"],
-input[type="reset"] {
-  margin: 1rem 0;
-  width: 12rem;
-}
-
-section#compare h2 {
-  width: fit-content;
-  height: fit-content;
-  margin: 0 auto;
-  font-weight: bold;
-}
-
-section#compare .row:nth-child(1) {
-  animation: fadeIn;
-  animation-duration: 1s;
-}
-section#compare .row:nth-child(1) h1 {
-  margin-bottom: 3rem;
-}
-
-section#compare .col-xl-1 {
-  align-self: center;
-  padding: 0;
-}
-
-section#compare ul {
-  list-style: none;
-  padding: 0;
-}
-
-div.card {
-  color: black;
-  margin: 0;
-}
-
-#statsRow .col-md-3 {
-  animation: fadeIn;
-  animation-duration: 1s;
-}
-
-@media (max-width: 385px) {
-  container {
+  }
+  
+  section#compare h2 {
+    width: fit-content;
     height: fit-content;
+    margin: 0 auto;
+    font-weight: bold;
+  }
+  
+  section#compare .row:nth-child(1) {
+    animation: fadeIn;
+    animation-duration: 1s;
+  }
+  section#compare .row:nth-child(1) h1 {
+    margin-bottom: 3rem;
+  }
+  
+  section#compare .col-xl-1 {
+    align-self: center;
+    padding: 0;
+  }
+  
+  section#compare ul {
+    list-style: none;
+    padding: 0;
   }
 
-  input[type="submit"] {
-    margin-bottom: 0;
-  }
-  input[type="reset"] {
-    margin-top: 0.5rem;
->>>>>>> main
+  div.card {
+    color: black;
+    margin: 0;
   }
 
-  input[type="text"]:nth-of-type(2) {
-    margin-top: 0.5rem;
-  }
-
-  #compare {
-    height: fit-content;
-  }
-
-  #statsRow {
-    padding: 0 1rem;
-    background-color: black;
-  }
-
-  .card h5 {
-    margin: 0.75rem;
-  }
-  .card {
-    padding: 1rem 0;
-  }
   #statsRow .col-md-3 {
-    padding: 0.5rem 0;
+    animation: fadeIn;
+    animation-duration: 1s;
   }
-}
 
-<<<<<<< HEAD
   .chart-container {
     display: none;
   }
@@ -227,16 +162,18 @@ div.card {
       padding: .5rem 0;
     }
   
-=======
-@keyframes fadeIn {
-  from {
-    opacity: 0%;
->>>>>>> main
   }
 
-  to {
-    opacity: 100%;
-  }
-}
+  @keyframes fadeIn {
+    from {
+      opacity: 0%;
+    }
 
-/* Player compare */
+    to {
+      opacity: 100%;
+    }
+  }
+
+  
+
+  /* Player compare */
