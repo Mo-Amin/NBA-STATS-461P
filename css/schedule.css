@@ -135,8 +135,12 @@ h1 {
   font-weight: bold;
 }
 
-#BoxscoreLabel {
+#BoxscoreLabel,
+#LeadersLabel {
   font-weight: bold;
+}
+#LeadersLabel {
+  text-align: center;
 }
 
 .TeamStats {
@@ -160,10 +164,51 @@ h1 {
   text-align: center;
   border-bottom: 3px double black;
   width: 100%;
+  margin-top: 10px;
 }
 .LeaderPoints,
 .LeaderRebounds,
 .LeaderAssists {
   width: 50%;
   text-align: center;
+  margin: 0 auto;
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+  text-shadow: 0.5px 0.5px red;
+}
+.vLeader,
+.hLeader {
+  font-weight: bold;
+  font-size: 24px;
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+  text-shadow: 0.5px 0.5px red;
+  min-width: 22px;
+}
+
+@media (max-width: 440px) {
+  .vLeader,
+  .hLeader {
+    font-size: 18px;
+  }
+  .LeaderPoints,
+  .LeaderRebounds,
+  .LeaderAssists {
+    font-size: 14px;
+  }
+}
+@media (min-width: 540px) {
+  .vLeader,
+  .hLeader {
+    font-size: 28px;
+  }
+}
+
+.LeaderNames {
+  font-size: 11px;
+  font-weight: bold;
+  text-shadow: none;
+  min-height: 32px;
+}
+div figure {
+  padding: 0;
+  margin: 0;
 }

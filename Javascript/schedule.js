@@ -39,33 +39,39 @@ function handleDate() {
     fetch(url)
       .then((response) => response.json())
       .then((data) => {
-        data.games.forEach((element) => {
-          //Game time, broadcast, status
-          let info = null;
-          if (!element.isGameActivated && element.gameDuration.hours === "") {
-            info = element.startTimeEastern;
-            if (element.watch.broadcast.broadcasters.national.length === 0) {
-              info += `<br/> League Pass`;
+        if (data.games.length === 0) {
+          h1 = document.createElement("h1");
+          h1.style.color = "white";
+          h1.textContent = "No Games Scheduled";
+          document.getElementById("Games").append(h1);
+        } else {
+          data.games.forEach((element) => {
+            //Game time, broadcast, status
+            let info = null;
+            if (!element.isGameActivated && element.gameDuration.hours === "") {
+              info = element.startTimeEastern;
+              if (element.watch.broadcast.broadcasters.national.length === 0) {
+                info += `<br/> League Pass`;
+              } else {
+                info += `<br/> ${element.watch.broadcast.broadcasters.national[0].shortName}`;
+              }
             } else {
-              info += `<br/> ${element.watch.broadcast.broadcasters.national[0].shortName}`;
+              info = `${element.vTeam.score} - ${element.hTeam.score}`;
+              if (element.isGameActivated && element.period.isHalftime)
+                info += "<br/> Halftime";
+              else if (element.isGameActivated && element.period.isEndOfPeriod)
+                info += `<br/> Q${element.period.current} Ended`;
+              else if (element.isGameActivated)
+                info += `<br/> Q${element.period.current} ${element.clock}`;
+              else info += `<br/> Final`;
             }
-          } else {
-            info = `${element.vTeam.score} - ${element.hTeam.score}`;
-            if (element.isGameActivated && element.period.isHalftime)
-              info += "<br/> Halftime";
-            else if (element.isGameActivated && element.period.isEndOfPeriod)
-              info += `<br/> Q${element.period.current} Ended`;
-            else if (element.isGameActivated)
-              info += `<br/> Q${element.period.current} ${element.clock}`;
-            else info += `<br/> Final`;
-          }
 
-          let gamedetails = `<b>City:</b> ${element.arena.city}<br/><b>Arena:</b> ${element.arena.name}<br/>`;
-          if (element.attendance !== "")
-            gamedetails += `<b>Game Attendance:</b> ${element.attendance}<br/>`;
-          gamedetails += `<a href='${element.tickets.leagGameInfo}'><b>Tickets</b></a><br/>`;
-          let section = document.createElement("section");
-          section.innerHTML = `<div class="col-12"> 
+            let gamedetails = `<b>City:</b> ${element.arena.city}<br/><b>Arena:</b> ${element.arena.name}<br/>`;
+            if (element.attendance !== "")
+              gamedetails += `<b>Game Attendance:</b> ${element.attendance}<br/>`;
+            gamedetails += `<a href='${element.tickets.leagGameInfo}'><b>Purchase Tickets</b></a><br/>`;
+            let section = document.createElement("section");
+            section.innerHTML = `<div class="col-12"> 
           <button
             type="button"
             class="btn btn-primary"
@@ -136,15 +142,16 @@ function handleDate() {
             </div>
           </div>
         </div>`;
-          document.getElementById("Games").append(section);
-        });
+            document.getElementById("Games").append(section);
+          });
 
-        console.log(data);
-        let btn = document.querySelectorAll(".btn.btn-primary");
-        console.log(btn);
+          console.log(data);
+          let btn = document.querySelectorAll(".btn.btn-primary");
+          console.log(btn);
 
-        for (let i = 0; i < btn.length; ++i) {
-          btn[i].addEventListener("click", handleClick);
+          for (let i = 0; i < btn.length; ++i) {
+            btn[i].addEventListener("click", handleClick);
+          }
         }
       })
       .catch((error) => console.log(error));
@@ -173,20 +180,40 @@ function handleClick() {
         console.log(data);
         let hteamId = data.basicGameData.hTeam.teamId;
         ModalBody.innerHTML = `
-        <div class="leaders"> 
-          <img class ="leadersPic"src = "https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/260x190/${data.stats.hTeam.leaders.points.players[0].personId}.png"/>
-          ${data.stats.hTeam.leaders.points.value}<p class="LeaderPoints">Points</p> ${data.stats.vTeam.leaders.points.value}
+        <h5 id="LeadersLabel">Team Leaders</h5>
+        <div class="leaders">
+        <figure>
+          <figcaption class="LeaderNames">${data.stats.hTeam.leaders.points.players[0].firstName} ${data.stats.hTeam.leaders.points.players[0].lastName}</figcaption>
+          <img class ="leadersPic" id="leaderhomePoints"src = "https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/260x190/${data.stats.hTeam.leaders.points.players[0].personId}.png"/>
+        </figure>
+        <p class="hLeader">${data.stats.hTeam.leaders.points.value}</p><p class="LeaderPoints">PTS</p><p class="vLeader">${data.stats.vTeam.leaders.points.value}</p>
+        <figure>
+          <figcaption class="LeaderNames">${data.stats.vTeam.leaders.points.players[0].firstName} ${data.stats.vTeam.leaders.points.players[0].lastName}</figcaption>
           <img class ="leadersPic"src = "https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/260x190/${data.stats.vTeam.leaders.points.players[0].personId}.png"/>
+        </figure>
         </div>
-        <div class="leaders"> 
+        <div class="leaders">
+        
+        <figure>
+          <figcaption class="LeaderNames">${data.stats.hTeam.leaders.assists.players[0].firstName} ${data.stats.hTeam.leaders.assists.players[0].lastName}</figcaption> 
           <img class ="leadersPic"src = "https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/260x190/${data.stats.hTeam.leaders.assists.players[0].personId}.png"/>
-          ${data.stats.hTeam.leaders.assists.value}<p class="LeaderAssists">Assists</p> ${data.stats.vTeam.leaders.assists.value}
+        </figure>
+        <p class="hLeader">${data.stats.hTeam.leaders.assists.value}</p><p class="LeaderAssists">ASTS</p><p class="vLeader">${data.stats.vTeam.leaders.assists.value}</p>
+        <figure>
+          <figcaption class="LeaderNames">${data.stats.vTeam.leaders.assists.players[0].firstName} ${data.stats.vTeam.leaders.assists.players[0].lastName}</figcaption> 
           <img class ="leadersPic"src = "https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/260x190/${data.stats.vTeam.leaders.assists.players[0].personId}.png"/>
+        </figure>
         </div>
         <div class="leaders"> 
+        <figure>
+          <figcaption class="LeaderNames">${data.stats.hTeam.leaders.rebounds.players[0].firstName} ${data.stats.hTeam.leaders.rebounds.players[0].lastName}</figcaption>
           <img class ="leadersPic"src = "https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/260x190/${data.stats.hTeam.leaders.rebounds.players[0].personId}.png"/>
-          ${data.stats.hTeam.leaders.rebounds.value}<p class="LeaderRebounds">Rebounds</p> ${data.stats.vTeam.leaders.rebounds.value}
+        </figure>
+        <p class="hLeader">${data.stats.hTeam.leaders.rebounds.value}</p><p class="LeaderRebounds">REBS</p><p class="vLeader">${data.stats.vTeam.leaders.rebounds.value}</p>
+        <figure>
+          <figcaption class="LeaderNames">${data.stats.vTeam.leaders.rebounds.players[0].firstName} ${data.stats.vTeam.leaders.rebounds.players[0].lastName}</figcaption>
           <img class ="leadersPic"src = "https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/260x190/${data.stats.vTeam.leaders.rebounds.players[0].personId}.png"/>
+        </figure>
         </div>
         <h5 id="BoxscoreLabel"><br/>BOXSCORE:</h5>
         <button type="button" class="btn btn-dark" id='vTeam${this.id}'>${data.basicGameData.vTeam.triCode}</button>
