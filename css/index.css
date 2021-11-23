@@ -4,8 +4,6 @@
   box-sizing: border-box;
 }
 body {
-  height: 100%;
-  width: 100%;
   background-color: rgba(46, 49, 49, 0.85);
 }
 .form-group {
@@ -15,6 +13,7 @@ header {
   font-family: Marker Felt;
   font-size: 24px;
   font-weight: bold;
+  height: fit-content;
 }
 
 .navbar-brand {
@@ -56,11 +55,7 @@ header {
     border-top: none;
   }
 }
-section {
-  display: flex;
-  justify-content: center;
-  margin: 30px;
-}
+
 .d-flex {
   font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
   width: 80%;
@@ -69,10 +64,9 @@ section {
 /* Featured player styles */
 
 section#featured {
-  height: 100vh;
+  height: auto;
   width: 100%;
-  background: rgba(46, 49, 49, 0.85);
-  /* color: rgba(189, 195, 199, 1); */
+  background: rgba(46, 49, 49, 1);
   color: white;
   font-size: 1rem;
   margin: 0;
@@ -82,14 +76,13 @@ section#featured {
 }
 
 #featured h1 {
-  font-size: 3rem;
-  margin-bottom: 2rem;
+  font-size: 2.5rem;
+  margin-bottom: 1.0rem;
 }
 
 #featured ul {
   padding: 0;
   list-style: none;
-  font-size: 1.5rem;
 }
 
 #attributes h3 {
