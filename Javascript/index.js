@@ -24,11 +24,24 @@ await fetch("https://data.nba.net/data/10s/prod/v1/2021/players.json")
 
     }
 
+
+        //grab team name
+        fetch(`https://data.nba.net/data/10s/prod/v1/2021/teams.json`)
+        .then(response => response.json())
+        .then(teamData => {
+            teamData.league.standard.forEach(team => {
+                if(team.teamId === data.league.standard[indexNumber].teamId)
+                {
+                    attributes.children[1].innerHTML = `Team: ${team.fullName}`; 
+                }
+            })
+        })
+
     //player attributes
     attributes.children[0].innerHTML = `${data.league.standard[indexNumber].firstName} ${data.league.standard[indexNumber].lastName} `;
     attributes.children[2].innerHTML = `Height: ${data.league.standard[indexNumber].heightFeet}'${data.league.standard[indexNumber].heightInches} `;
     attributes.children[3].innerHTML = `Weight: ${data.league.standard[indexNumber].weightPounds}lbs`;
-    attributes.children[4].innerHTML = `Position: ${data.league.standard[indexNumber].pos}`
+    attributes.children[4].innerHTML = `Position: ${data.league.standard[indexNumber].teamSitesOnly.posFull}`
     attributes.children[5].innerHTML = `Origin: ${data.league.standard[indexNumber].country}`
     
 
@@ -40,11 +53,10 @@ await fetch("https://data.nba.net/data/10s/prod/v1/2021/players.json")
     let image = document.querySelector('#playerImage');
     image.src = playerPhoto;
     
-
+    //grab chosen player profile
     fetch(`https://data.nba.net/data/10s/prod/v1/2021/players/${playerId}_profile.json`)
     .then(response => response.json())
     .then(data => {
-
 
     // STATS  
     const playerStats = data.league.standard.stats;
