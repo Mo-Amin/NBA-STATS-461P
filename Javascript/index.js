@@ -5,14 +5,16 @@ const attributes = document.querySelector('#attributes');
 const numPlayers = 545;
 
 
+//TODO: still need to grab player photo and the team that hey plays for 
 
-
-fetch("https://data.nba.net/data/10s/prod/v1/2021/players.json")
+let getPlayer = async () => { 
+await fetch("https://data.nba.net/data/10s/prod/v1/2021/players.json")
 .then(response => response.json())
 .then(data => { 
     
     let indexNumber = 0;
-    //only look for players that are active
+    
+    //while the current player is innactive
     while(!indexNumber) {
     let player = getRandomNumber(numPlayers);
     
@@ -28,39 +30,49 @@ fetch("https://data.nba.net/data/10s/prod/v1/2021/players.json")
     attributes.children[3].innerHTML = `Weight: ${data.league.standard[indexNumber].weightPounds}lbs`;
     attributes.children[4].innerHTML = `Position: ${data.league.standard[indexNumber].pos}`
     attributes.children[5].innerHTML = `Origin: ${data.league.standard[indexNumber].country}`
-    console.log(data);
+    
 
     const chosenPlayer = data.league.standard[indexNumber];
     const playerId = chosenPlayer.personId;
+
+    //grab player photo
+    const playerPhoto = `https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/260x190/${playerId}.png`;
+    let image = document.querySelector('#playerImage');
+    image.src = playerPhoto;
+    
 
     fetch(`https://data.nba.net/data/10s/prod/v1/2021/players/${playerId}_profile.json`)
     .then(response => response.json())
     .then(data => {
 
-        console.log(data);
 
-
-    // STATS //
-        
+    // STATS  
     const playerStats = data.league.standard.stats;
-    
     const ppg = playerStats.latest.ppg;
     const ast = playerStats.latest.apg;
     const rbg = playerStats.latest.rpg;
     const min = playerStats.latest.mpg;
 
-    
-
     stats.children[1].innerHTML = `PPG: ${ppg}`
+
+    if(ppg != -1) {
+
     stats.children[2].innerHTML = `APG: ${ast}`
     stats.children[3].innerHTML = `RBG: ${rbg}`
     stats.children[4].innerHTML = `Min: ${min}`
 
+    }
+    else {
+    stats.children[1].innerHTML = `PPG: 0`
+    stats.children[2].innerHTML = `APG: 0`
+    stats.children[3].innerHTML = `RBG: 0`
+    stats.children[4].innerHTML = `Min: 0`
 
+    }
 
     });
     
-});
+})};
 
 //grab a random number for a random player
 function getRandomNumber(numPlayers) {
@@ -69,6 +81,8 @@ function getRandomNumber(numPlayers) {
 
     return randomPlayer;
     }
+
+getPlayer();
 
 
 
