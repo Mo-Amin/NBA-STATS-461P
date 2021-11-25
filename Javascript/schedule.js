@@ -74,7 +74,7 @@ function handleDate() {
             section.innerHTML = `<div class="col-12"> 
           <button
             type="button"
-            class="btn btn-primary"
+            class="btn btn-primary shadow-none"
             id=${element.gameId}
             data-bs-toggle="modal"
             data-bs-target="#exampleModal${element.gameId}"
@@ -84,6 +84,7 @@ function handleDate() {
                 src="https://cdn.nba.com/logos/nba/${element.vTeam.teamId}/primary/D/logo.svg"
                 width="100"
                 height="100"
+                alt="${element.vTeam.triCode} Logo"
                 class="img_class"
               />
               <figcaption>${element.vTeam.win}-${element.vTeam.loss}</figcaption>
@@ -95,6 +96,7 @@ function handleDate() {
                 src="https://cdn.nba.com/logos/nba/${element.hTeam.teamId}/primary/D/logo.svg"
                 width="100"
                 height="100"
+                alt="${element.hTeam.triCode} Logo"
                 class="img_class"
               />
               <figcaption>${element.hTeam.win}-${element.hTeam.loss}</figcaption>
@@ -115,8 +117,10 @@ function handleDate() {
                   ${element.vTeam.triCode}<img
                   src="https://cdn.nba.com/logos/nba/${element.vTeam.teamId}/primary/D/logo.svg"
                   width="100"
+                  alt="${element.vTeam.triCode} Logo"
                   height="100"/> @ <img
                   src="https://cdn.nba.com/logos/nba/${element.hTeam.teamId}/primary/D/logo.svg"
+                  alt="${element.hTeam.triCode} Logo"
                   width="100"
                   height="100"/>${element.hTeam.triCode} </h5>
                   <button
@@ -184,35 +188,35 @@ function handleClick() {
         <div class="leaders">
         <figure>
           <figcaption class="LeaderNames">${data.stats.hTeam.leaders.points.players[0].firstName} ${data.stats.hTeam.leaders.points.players[0].lastName}</figcaption>
-          <img class ="leadersPic" id="leaderhomePoints"src = "https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/260x190/${data.stats.hTeam.leaders.points.players[0].personId}.png"/>
+          <img class ="leadersPic" alt="Picture of Home Team point leader ${data.stats.hTeam.leaders.points.players[0].firstName} ${data.stats.hTeam.leaders.points.players[0].lastName}"id="leaderhomePoints"src = "https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/260x190/${data.stats.hTeam.leaders.points.players[0].personId}.png"/>
         </figure>
         <p class="hLeader">${data.stats.hTeam.leaders.points.value}</p><p class="LeaderPoints">PTS</p><p class="vLeader">${data.stats.vTeam.leaders.points.value}</p>
         <figure>
           <figcaption class="LeaderNames">${data.stats.vTeam.leaders.points.players[0].firstName} ${data.stats.vTeam.leaders.points.players[0].lastName}</figcaption>
-          <img class ="leadersPic"src = "https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/260x190/${data.stats.vTeam.leaders.points.players[0].personId}.png"/>
+          <img class ="leadersPic" alt=" Picture of Visitor Team point leader ${data.stats.vTeam.leaders.points.players[0].firstName} ${data.stats.vTeam.leaders.points.players[0].lastName}"src = "https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/260x190/${data.stats.vTeam.leaders.points.players[0].personId}.png"/>
         </figure>
         </div>
         <div class="leaders">
         
         <figure>
           <figcaption class="LeaderNames">${data.stats.hTeam.leaders.assists.players[0].firstName} ${data.stats.hTeam.leaders.assists.players[0].lastName}</figcaption> 
-          <img class ="leadersPic"src = "https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/260x190/${data.stats.hTeam.leaders.assists.players[0].personId}.png"/>
+          <img class ="leadersPic" alt="Picture of Home Team assists leader ${data.stats.hTeam.leaders.assists.players[0].firstName} ${data.stats.hTeam.leaders.assists.players[0].lastName}"src = "https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/260x190/${data.stats.hTeam.leaders.assists.players[0].personId}.png"/>
         </figure>
         <p class="hLeader">${data.stats.hTeam.leaders.assists.value}</p><p class="LeaderAssists">ASTS</p><p class="vLeader">${data.stats.vTeam.leaders.assists.value}</p>
         <figure>
           <figcaption class="LeaderNames">${data.stats.vTeam.leaders.assists.players[0].firstName} ${data.stats.vTeam.leaders.assists.players[0].lastName}</figcaption> 
-          <img class ="leadersPic"src = "https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/260x190/${data.stats.vTeam.leaders.assists.players[0].personId}.png"/>
+          <img class ="leadersPic" alt ="Picture of Visitor Team assists leader ${data.stats.vTeam.leaders.assists.players[0].firstName} ${data.stats.vTeam.leaders.assists.players[0].lastName}"src = "https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/260x190/${data.stats.vTeam.leaders.assists.players[0].personId}.png"/>
         </figure>
         </div>
         <div class="leaders"> 
         <figure>
           <figcaption class="LeaderNames">${data.stats.hTeam.leaders.rebounds.players[0].firstName} ${data.stats.hTeam.leaders.rebounds.players[0].lastName}</figcaption>
-          <img class ="leadersPic"src = "https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/260x190/${data.stats.hTeam.leaders.rebounds.players[0].personId}.png"/>
+          <img class ="leadersPic" alt="Picture of Home Team rebounds leader ${data.stats.hTeam.leaders.rebounds.players[0].firstName} ${data.stats.hTeam.leaders.rebounds.players[0].lastName}"src = "https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/260x190/${data.stats.hTeam.leaders.rebounds.players[0].personId}.png"/>
         </figure>
         <p class="hLeader">${data.stats.hTeam.leaders.rebounds.value}</p><p class="LeaderRebounds">REBS</p><p class="vLeader">${data.stats.vTeam.leaders.rebounds.value}</p>
         <figure>
           <figcaption class="LeaderNames">${data.stats.vTeam.leaders.rebounds.players[0].firstName} ${data.stats.vTeam.leaders.rebounds.players[0].lastName}</figcaption>
-          <img class ="leadersPic"src = "https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/260x190/${data.stats.vTeam.leaders.rebounds.players[0].personId}.png"/>
+          <img class ="leadersPic" alt="Picture of Visitor Team rebounds leader ${data.stats.vTeam.leaders.rebounds.players[0].firstName} ${data.stats.vTeam.leaders.rebounds.players[0].lastName}"src = "https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/260x190/${data.stats.vTeam.leaders.rebounds.players[0].personId}.png"/>
         </figure>
         </div>
         <h5 id="BoxscoreLabel"><br/>BOXSCORE:</h5>
@@ -222,6 +226,7 @@ function handleClick() {
 
         <div class="TeamStats">
           <img src="https://cdn.nba.com/logos/nba/${data.basicGameData.hTeam.teamId}/primary/D/logo.svg"
+            alt="${data.basicGameData.hTeam.triCode} Team Logo"
             width="100"
             height="100"
          />
@@ -255,6 +260,7 @@ function handleClick() {
     <div class="Teams" id="VisitorTable${this.id}">
       <div class="TeamStats">
         <img src="https://cdn.nba.com/logos/nba/${data.basicGameData.vTeam.teamId}/primary/D/logo.svg"
+        alt="${data.basicGameData.vTeam.triCode} Team Logo"
         width="100"
         height="100"
         />

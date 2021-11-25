@@ -9,6 +9,10 @@ section:not(#Date) {
   border: 0.5px solid red;
   box-shadow: 5px 5px red;
 
+  width: 92%;
+  margin: 0 auto;
+  margin-top: 20px;
+
   /*
   margin: 0 auto;
   margin-bottom: 50px;
@@ -19,11 +23,14 @@ section:not(#Date) {
   display: flex;
   justify-content: center;
   background-color: black;
+  margin: 40px;
 }
 .btn.btn-primary {
   display: flex;
   background: none;
   border: none;
+  width: 100%;
+  justify-content: center;
 }
 
 .btn.btn-primary:focus {
