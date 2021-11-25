@@ -7,61 +7,28 @@ form.addEventListener('submit', (event) => {
     event.preventDefault();
 
     removeChildren(statsRow);
+
+    let playerStats = [];
     
     const players = document.querySelectorAll('input[type=text]');
 
-    //chart configuration
-    const labels = [
-        'PPG',
-        'AST',
-        'RPG',
-        'MIN',
-      ];
-      const data = {
-        labels: labels,
-        datasets: [{
-          label: 'My First dataset',
-          backgroundColor: 'rgb(153, 204, 255)',
-          borderColor: 'rgb(255, 99, 132)',
-          data: [0, 10, 5, 2, 20, 30, 45],
-          
-        },
-        {
-            label: 'My First dataset',
-            backgroundColor: 'rgb(255, 255, 153)',
-            borderColor: 'rgb(255, 99, 132)',
-            data: [8, 10, 5, 2, 20, 30, 45],
-            
-          },
-          
-        ]
-      };
-
-    const config = {
-        type: 'bar',
-        data: data,
-        options: {}
-      };
-
     players.forEach((player) => {
 
-        let nameObj = {};
+        let nameObj = {}; 
         let trimmedName = player.value.trim()
         let formedName = trimmedName.split(" ");
 
         nameObj.firstName = formedName[0];
         nameObj.lastName = formedName[1];
 
-        getData(nameObj);
+        getData(nameObj, playerStats);
 
     })
 
-    const myChart = new Chart(
-        document.getElementById('myChart'),
-        config
-      );
-
-    chartContainer.style.display = "block";
+    //!THIS IS NOT IDEAL BECAUSE WE REQUEST RESPONSE TIME MAY VARY... FIND ALTERNATIVE
+    setTimeout(() => {createChart(playerStats)}, 2000);
+    
+    //createChart(playerStats);
 
     //THIS WAS FOR ADDING A 'vs' BETWEEN THE PLAYER CARDS, MAYBE DO LATER?
     // let vsCol = document.createElement('div');
@@ -74,7 +41,7 @@ form.addEventListener('submit', (event) => {
 })
 
 
-async function getData(playerName) {
+async function getData(playerName, playerStats) {
    await fetch("https://data.nba.net/data/10s/prod/v1/2021/players.json")
   .then((response) => response.json())
   .then((data) =>
@@ -86,7 +53,6 @@ async function getData(playerName) {
             fetch(`https://data.nba.net/data/10s/prod/v1/2021/players/${playerId}_profile.json`)
             .then(response => response.json())
             .then(data => {
-                console.log(data);
                 let stats = data.league.standard.stats.latest;
 
                 let colElement = document.createElement('div');
@@ -111,6 +77,30 @@ async function getData(playerName) {
                 statsRow.append(colElement)
 
 
+                //add stats to argument arrays being passed by reference for chart
+                if(playerStats.length === 0)
+                {
+                  let playerOneStats = {};
+                  playerOneStats.name = player.firstName + ' ' + player.lastName;
+                  playerOneStats.stats = [];
+                  playerOneStats.stats.push(parseFloat(stats.ppg));
+                  playerOneStats.stats.push(parseFloat(stats.apg));
+                  playerOneStats.stats.push(parseFloat(stats.rpg));
+                  playerOneStats.stats.push(parseFloat(stats.mpg));
+                  playerStats.push(playerOneStats)
+                
+                }
+
+                else {
+                  let playerTwoStats = {};
+                  playerTwoStats.name = player.firstName + ' ' + player.lastName;
+                  playerTwoStats.stats = [];
+                  playerTwoStats.stats.push(parseFloat(stats.ppg));
+                  playerTwoStats.stats.push(parseFloat(stats.apg));
+                  playerTwoStats.stats.push(parseFloat(stats.rpg));
+                  playerTwoStats.stats.push(parseFloat(stats.mpg));
+                  playerStats.push(playerTwoStats);
+                }
                 //stats
 
                 let list = document.createElement('ul');
@@ -151,4 +141,46 @@ let removeChildren = (parent) => {
     }
 }
 
+let createChart = (playerStats) => {
+          console.log(playerStats);
+          //chart configuration
+          const labels = [
+            'PPG',
+            'AST',
+            'RPG',
+            'MIN',
+          ];
+          const data = {
+            labels: labels,
+            datasets: [{
+              label: playerStats[0].name,
+              backgroundColor: 'rgb(153, 204, 255)',
+              borderColor: 'rgb(255, 99, 132)',
+              data: playerStats[0].stats.map(stat => stat),
+              
+            },
+            {
+                label: playerStats[1].name,
+                backgroundColor: 'rgb(255, 255, 153)',
+                borderColor: 'rgb(255, 99, 132)',
+                data: playerStats[1].stats.map(stat => stat),
+                
+              },
+              
+            ]
+          };
+    
+        const config = {
+            type: 'bar',
+            data: data,
+            options: {}
+          };
+  
+      const myChart = new Chart(
+          document.getElementById('myChart'),
+          config
+        );
+        chartContainer.style.display = "block";
+
+}
 
