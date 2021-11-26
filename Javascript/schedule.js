@@ -209,6 +209,7 @@ let hclick = false;
 function handleClick() {
   vclick = false;
   hclick = false;
+
   console.log(this.id);
   let ModalBody = document.getElementById(`ModalBody${this.id}`);
 
@@ -336,7 +337,6 @@ function handleClick() {
         for (let i = 0; i < boxscoreShowBtn.length; ++i) {
           boxscoreShowBtn[i].addEventListener("click", handleBoxscorebutton);
         }
-
         data.stats.activePlayers.forEach((element) => {
           if (element.teamId === hteamId) {
             team = document.getElementById(`HomeTeamrows${this.id}`);
@@ -364,6 +364,36 @@ function handleClick() {
           </tr>`;
           }
         });
+        /*
+        let element = null;
+        if (this.id.slice(0,5)) element = data.stats.hTeam.totals;
+        else element = data.stats.vTeam.totals;
+        */
+        let element = null;
+        element = data.stats.hTeam.totals;
+        team = document.getElementById(`HomeTeamrows${this.id}`);
+        for (let i = 0; i < 2; ++i) {
+          team.innerHTML += `
+            <tr>
+            <td><b>Total</b></td>
+            <td>${element.min}</td>
+            <td>${element.points}</td>
+            <td>${element.assists}</td>
+            <td>${element.totReb}</td>
+            <td>${element.blocks}</td>
+            <td>${element.steals}</td>
+            <td>${element.ftm}</td>
+            <td>${element.fta}</td>
+            <td>${element.ftp}</td>
+            <td>${element.fgm}</td>
+            <td>${element.fga}</td>
+            <td>${element.fgp}</td>
+            <td>${element.turnovers}</td>
+            <td>${element.pFouls}</td>
+            </tr>`;
+          element = data.stats.vTeam.totals;
+          team = document.getElementById(`VisterTeamrows${this.id}`);
+        }
       }
     })
     .catch((error) => console.log(error));

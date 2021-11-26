@@ -77,6 +77,8 @@ input {
 
 tr:hover {
   background-color: rgba(251, 255, 0, 0.65);
+  font-weight: bold;
+  color: blue;
 }
 
 /* How to incorporate border-collapse. Orginated from https://www.w3schools.com/css/css_table.asp */

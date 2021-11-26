@@ -235,3 +235,7 @@ div figure {
 #Game_date {
   height: fit-content;
 }
+thead {
+  position: sticky;
+  top: 0;
+}
