@@ -1,5 +1,13 @@
 //https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/date
 let date = document.querySelector("#Date");
+
+let leftPointButton = document.createElement("Button");
+
+leftPointButton.innerHTML = "<";
+leftPointButton.style.marginRight = "80px";
+leftPointButton.setAttribute("class", "pointsDate");
+date.append(leftPointButton);
+
 console.log(date.value);
 let tmp = new Date();
 
@@ -10,17 +18,42 @@ console.log(datetmp);
 
 //https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/getFullYear
 let current_year = new Date().getFullYear();
+
 let date_input = document.createElement("input");
 date_input.type = "date";
-date_input.min = `${current_year}-01-01`;
-date_input.max = `${current_year + 1}-12-31`;
+date_input.min = `${current_year}-10-19`;
+date_input.max = `${current_year + 1}-04-10`;
 date_input.id = "Game_date";
 date_input.value = datetmp;
+date_input.onkeydown = (e) => e.preventDefault();
 
 date.append(date_input);
 
+let RightPointButton = document.createElement("Button");
+RightPointButton.innerHTML = ">";
+RightPointButton.style.marginLeft = "80px";
+RightPointButton.setAttribute("class", "pointsDate");
+date.append(RightPointButton);
+
 date_input.addEventListener("input", handleDate);
+
+leftPointButton.addEventListener("click", handleLeftPoint);
+RightPointButton.addEventListener("click", handleRightPoint);
+
 let date_chosen = null;
+
+function PicImageError(imgError) {
+  imgError.src = "../images/Blank_Profile.png";
+}
+
+function handleLeftPoint() {
+  date_input.stepDown();
+  handleDate();
+}
+function handleRightPoint() {
+  date_input.stepUp();
+  handleDate();
+}
 
 function handleDate() {
   let games = document.getElementById("Games") === null;
@@ -49,7 +82,8 @@ function handleDate() {
             //Game time, broadcast, status
             let info = null;
             if (!element.isGameActivated && element.gameDuration.hours === "") {
-              info = element.startTimeEastern;
+              if (element.startTimeEastern === "") info = "TBD";
+              else info = element.startTimeEastern;
               if (element.watch.broadcast.broadcasters.national.length === 0) {
                 info += `<br/> League Pass`;
               } else {
@@ -61,6 +95,12 @@ function handleDate() {
                 info += "<br/> Halftime";
               else if (element.isGameActivated && element.period.isEndOfPeriod)
                 info += `<br/> Q${element.period.current} Ended`;
+              else if (
+                element.isGameActivated &&
+                element.period.current === 4 &&
+                element.clock === ""
+              )
+                info += `<br/> Final`;
               else if (element.isGameActivated)
                 info += `<br/> Q${element.period.current} ${element.clock}`;
               else info += `<br/> Final`;
@@ -188,7 +228,7 @@ function handleClick() {
         <div class="leaders">
         <figure>
           <figcaption class="LeaderNames">${data.stats.hTeam.leaders.points.players[0].firstName} ${data.stats.hTeam.leaders.points.players[0].lastName}</figcaption>
-          <img class ="leadersPic" alt="Picture of Home Team point leader ${data.stats.hTeam.leaders.points.players[0].firstName} ${data.stats.hTeam.leaders.points.players[0].lastName}"id="leaderhomePoints"src = "https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/260x190/${data.stats.hTeam.leaders.points.players[0].personId}.png"/>
+          <img class ="leadersPic" alt="Picture of Home Team point leader ${data.stats.hTeam.leaders.points.players[0].firstName} ${data.stats.hTeam.leaders.points.players[0].lastName}"id="leaderhomePoints"src = "https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/260x190/${data.stats.hTeam.leaders.points.players[0].personId}.png" />
         </figure>
         <p class="hLeader">${data.stats.hTeam.leaders.points.value}</p><p class="LeaderPoints">PTS</p><p class="vLeader">${data.stats.vTeam.leaders.points.value}</p>
         <figure>
