@@ -235,6 +235,7 @@ div figure {
 #Game_date {
   height: fit-content;
 }
+/*https://css-tricks.com/position-sticky-and-table-headers/*/
 thead {
   position: sticky;
   top: 0;

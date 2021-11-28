@@ -92,6 +92,7 @@ tr:hover {
 }
 #tabless {
   overflow-x: scroll;
+  height: 50vh;
 }
 thead tr {
   font-size: 20px;
@@ -103,6 +104,10 @@ tbody #season_Column {
 }
 thead #season_Column {
   border-right: 1.5px solid black;
+}
+thead {
+  position: sticky;
+  top: 0;
 }
 table {
   color: black;

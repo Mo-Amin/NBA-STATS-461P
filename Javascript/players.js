@@ -1,3 +1,5 @@
+document.cookie = "cross-site-cookie=bar; SameSite=None Secure";
+
 let container = document.querySelector(".Player_container");
 let row = document.querySelector(".row");
 

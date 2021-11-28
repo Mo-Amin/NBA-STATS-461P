@@ -1,3 +1,5 @@
+document.cookie = "cross-site-cookie=bar; SameSite=None Secure";
+
 //https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/date
 let date = document.querySelector("#Date");
 
@@ -93,21 +95,31 @@ function handleDate() {
               info = `${element.vTeam.score} - ${element.hTeam.score}`;
               if (element.isGameActivated && element.period.isHalftime)
                 info += "<br/> Halftime";
-              else if (element.isGameActivated && element.period.isEndOfPeriod)
-                info += `<br/> Q${element.period.current} Ended`;
               else if (
+                element.isGameActivated &&
+                element.period.isEndOfPeriod
+              ) {
+                if (element.period.current > 4) {
+                  info += `<br/> OT${element.period.current - 4} Ended`;
+                } else info += `<br/> Q${element.period.current} Ended`;
+              } else if (
                 element.isGameActivated &&
                 element.period.current === 4 &&
                 element.clock === ""
               )
                 info += `<br/> Final`;
-              else if (element.isGameActivated)
-                info += `<br/> Q${element.period.current} ${element.clock}`;
-              else info += `<br/> Final`;
+              else if (element.isGameActivated) {
+                if (element.period.current > 4)
+                  info += `<br/> OT${element.period.current - 4} ${
+                    element.clock
+                  }`;
+                else
+                  info += `<br/> Q${element.period.current} ${element.clock}`;
+              } else info += `<br/> Final`;
             }
 
             let gamedetails = `<b>City:</b> ${element.arena.city}<br/><b>Arena:</b> ${element.arena.name}<br/>`;
-            if (element.attendance !== "")
+            if (element.attendance !== "" && element.attendance !== "0")
               gamedetails += `<b>Game Attendance:</b> ${element.attendance}<br/>`;
             gamedetails += `<a href='${element.tickets.leagGameInfo}'><b>Purchase Tickets</b></a><br/>`;
             let section = document.createElement("section");
