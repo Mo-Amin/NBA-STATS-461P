@@ -1,3 +1,5 @@
+document.cookie = "cross-site-cookie=bar; SameSite=None Secure";
+
 let container = document.querySelector(".Player_container");
 let row = document.querySelector(".row");
 
@@ -304,7 +306,7 @@ function handleClick(event) {
           str += `<b>Professional Experience (Years):</b> ${element.yearsPro}<br/><br/><b>Teams:</b><br/>`;
 
           element.teams.forEach((team) => {
-            str += `<img src='https://cdn.nba.com/logos/nba/${team.teamId}/primary/D/logo.svg' width='50px'/> --> <b>${team.seasonStart} - ${team.seasonEnd} </b><br/>`;
+            str += `<img src='https://cdn.nba.com/logos/nba/${team.teamId}/primary/D/logo.svg' alt='${element.firstName} ${element.lastName} Team from ${team.seasonStart} to ${team.seasonEnd}' width='50px'/> --> <b>${team.seasonStart} - ${team.seasonEnd} </b><br/>`;
           });
 
           popup_body.innerHTML = str;
