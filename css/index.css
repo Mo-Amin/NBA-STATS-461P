@@ -6,6 +6,7 @@
 body {
   background-color: rgba(46, 49, 49, 0.85);
 }
+
 .form-group {
   padding-top: 100px;
 }
@@ -66,7 +67,7 @@ header {
 section#featured {
   height: auto;
   width: 100%;
-  background: rgba(46, 49, 49, 1);
+  background: black;
   color: white;
   font-size: 1rem;
   margin: 0;
@@ -123,3 +124,20 @@ section#featured {
   }
 }
 /* Featured player styles */
+
+#Developers {
+  background-color: black;
+  text-align: center;
+  font-weight: bold;
+  font-size: 20px;
+  color: white;
+}
+.devImages {
+  width: 40vh;
+  height: 50vh;
+}
+#DevImgSec {
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+}

@@ -12,6 +12,8 @@
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
     />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
     <script
       src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"
       integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p"
@@ -91,34 +93,26 @@
     </header>
 
     <div id="Category">
-      <select name="Category option" id="Category_choice">
-        <option value="None">No Option Selected</option>
-        <option value="ppg">Points</option>
-        <option value="oppg">Opponent Points</option>
-        <option value="apg">Assists</option>
-        <option value="trpg">Rebounds</option>
-        <option value="bpg">Blocks</option>
-        <option value="spg">Steals</option>
-        <option value="pfpg">Fouls</option>
-        <option value="tpg">Turnovers</option>
-        <option value="fgp">FG%</option>
-        <option value="ftp">FT%</option>
-      </select>
+      <div>
+        <label for="Category_choice"
+          >Choose a stat to find where each Team ranks!</label
+        >
+        <select name="Category option" id="Category_choice">
+          <option value="None">No Option Selected</option>
+          <option value="ppg">Points</option>
+          <option value="oppg">Opponent Points</option>
+          <option value="apg">Assists</option>
+          <option value="trpg">Rebounds</option>
+          <option value="bpg">Blocks</option>
+          <option value="spg">Steals</option>
+          <option value="pfpg">Fouls</option>
+          <option value="tpg">Turnovers</option>
+          <option value="fgp">FG%</option>
+          <option value="ftp">FT%</option>
+        </select>
+      </div>
     </div>
-
-    <div id="TeamTables">
-      <table cellpadding="15" id="statTable">
-        <!-- HEADING OF TABLE -->
-        <thead>
-          <tr id="header-row">
-            <th>Ranking #</th>
-            <th id="season_Column">Team</th>
-            <th>Avg</th>
-          </tr>
-        </thead>
-        <!-- FILL THE BODY OF TABLE WITH ROWS -->
-        <tbody id="tableRows"></tbody>
-      </table>
-    </div>
+    <div id="TeamTables"></div>
+    <div id="TeamChart"></div>
   </body>
 </html>

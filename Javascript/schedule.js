@@ -121,7 +121,14 @@ function handleDate() {
             let gamedetails = `<b>City:</b> ${element.arena.city}<br/><b>Arena:</b> ${element.arena.name}<br/>`;
             if (element.attendance !== "" && element.attendance !== "0")
               gamedetails += `<b>Game Attendance:</b> ${element.attendance}<br/>`;
-            gamedetails += `<a href='${element.tickets.leagGameInfo}'><b>Purchase Tickets</b></a><br/>`;
+
+            if (
+              element.attendance === "" &&
+              element.clock === "" &&
+              element.gameDuration.hours === "" &&
+              element.gameDuration.minutes === ""
+            )
+              gamedetails += `<a href='${element.tickets.leagGameInfo}'><b>Purchase Tickets</b></a><br/>`;
             let section = document.createElement("section");
             section.innerHTML = `<div class="col-12"> 
           <button
@@ -237,7 +244,7 @@ function handleClick() {
         console.log(data);
         let hteamId = data.basicGameData.hTeam.teamId;
         ModalBody.innerHTML = `
-        <h5 id="LeadersLabel">Team Leaders</h5>
+        <h5 id="LeadersLabel"><br/>Team Leaders</h5>
         <div class="leaders">
         <figure>
           <figcaption class="LeaderNames">${data.stats.hTeam.leaders.points.players[0].firstName} ${data.stats.hTeam.leaders.points.players[0].lastName}</figcaption>
