@@ -226,7 +226,7 @@ async function getData(playerNames, chart) {
                playerStats[0].stats.push(parseFloat(stats.mpg)) 
 
 
-                        //retrieve second player profile
+            //retrieve second player profile
             fetch(`https://data.nba.net/data/10s/prod/v1/2021/players/${playerIds[1]}_profile.json`)
             .then(response => response.json())
             .then(data => {
@@ -256,7 +256,7 @@ async function getData(playerNames, chart) {
   
                 let name = document.createElement('h5');
                 name.className = "card-title";
-                name.innerHTML= `${profile.name} ${profile.name}`;
+                name.innerHTML= `${profile.name}`;
                 card.appendChild(pic);
                 card.appendChild(name);
                 colElement.appendChild(card);
