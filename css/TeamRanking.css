@@ -1,0 +1,43 @@
+#body {
+  height: 100vh;
+  padding-top: 100px;
+  background-color: black;
+}
+#Category {
+  margin: 50px;
+  display: flex;
+  justify-content: center;
+}
+
+table {
+  display: block;
+  margin: 0 auto;
+  margin-top: 10px;
+  width: 94%;
+  height: 50vh;
+  overflow-x: scroll;
+  border-collapse: collapse;
+  color: white;
+}
+table,
+tr,
+td {
+  border: 2px solid red;
+}
+tr td {
+  border-top: 2px solid red;
+  border-right: 0.5px solid rgba(252, 4, 4, 0.4);
+}
+thead,
+th,
+td {
+  padding: 10px;
+  text-align: center;
+}
+
+tbody tr {
+  border-bottom: 1px solid red;
+}
+tr:hover {
+  background-color: rgba(251, 255, 0, 0.65);
+}
