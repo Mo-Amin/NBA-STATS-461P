@@ -86,7 +86,7 @@ function handleDate() {
   //Make sure we aren't checking the same date as previous
   if (date_chosen !== date_input.value.replaceAll("-", "")) {
     date_chosen = date_input.value.replaceAll("-", "");
-    let url = `http://data.nba.net/data/10s/prod/v1/${date_chosen}/scoreboard.json`;
+    let url = `https://data.nba.net/data/10s/prod/v1/${date_chosen}/scoreboard.json`;
     fetch(url)
       .then((response) => response.json())
       .then((data) => {
