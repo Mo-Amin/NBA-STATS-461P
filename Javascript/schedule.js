@@ -288,7 +288,7 @@ function handleClick() {
 
   //Make sure we remove the - characters in order to meet api requirements
   let dateChosen = date_input.value.replaceAll("-", "");
-  let boxscoreURL = `http://data.nba.net/data/10s/prod/v1/${dateChosen}/${this.id}_boxscore.json`;
+  let boxscoreURL = `https://data.nba.net/data/10s/prod/v1/${dateChosen}/${this.id}_boxscore.json`;
   fetch(boxscoreURL)
     .then((response) => response.json())
     .then((data) => {

@@ -15,7 +15,7 @@ let firstNameCheck = "";
 let lastNameCheck = "";
 
 let userinput = document.querySelector("#userinput");
-let urlNBA = `http://data.nba.net/data/10s/prod/v1/2021/players.json`;
+let urlNBA = `https://data.nba.net/data/10s/prod/v1/2021/players.json`;
 
 let table = document.querySelector("#table");
 table.style.display = "none";
