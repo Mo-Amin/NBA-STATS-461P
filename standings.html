@@ -4,16 +4,12 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>NBA Schedule</title>
-    <link rel="stylesheet" href="../css/index.css" />
-    <link rel="stylesheet" href="../css/TeamRanking.css" />
+    <link rel="stylesheet" href="../css/standings.css" />
 
     <link
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
     />
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
     <script
       src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"
       integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p"
@@ -24,9 +20,11 @@
       integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF"
       crossorigin="anonymous"
     ></script>
-    <script defer src="../Javascript/TeamRanking.js"></script>
+
+    <script defer src="../Javascript/standings.js"></script>
+    <title>Standings</title>
   </head>
-  <body id="body">
+  <body>
     <header>
       <nav class="navbar fixed-top navbar-expand-md navbar-light bg-light">
         <div class="container-fluid">
@@ -93,26 +91,17 @@
       </nav>
     </header>
 
-    <div id="Category">
-      <div>
-        <label for="Category_choice"
-          >Choose a stat to find where each Team ranks!</label
-        >
-        <select name="Category option" id="Category_choice">
-          <option value="None">No Option Selected</option>
-          <option value="ppg">Points</option>
-          <option value="oppg">Opponent Points</option>
-          <option value="apg">Assists</option>
-          <option value="trpg">Rebounds</option>
-          <option value="bpg">Blocks</option>
-          <option value="spg">Steals</option>
-          <option value="pfpg">Fouls</option>
-          <option value="tpg">Turnovers</option>
-          <option value="fgp">FG%</option>
-          <option value="ftp">FT%</option>
-        </select>
+    <div class="container">
+      <div class="row justify-content-md-center">
+        <div class="col col-md-6">
+          <h1>East</h1>
+          <ul id="east"></ul>
+        </div>
+        <div class="col col-md-6">
+          <h1>West</h1>
+          <ul id="west"></ul>
+        </div>
       </div>
     </div>
-    <div id="TeamTables"></div>
   </body>
 </html>
