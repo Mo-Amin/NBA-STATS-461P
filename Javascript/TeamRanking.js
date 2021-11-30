@@ -6,7 +6,7 @@ Category.addEventListener("input", handleCategorySelection);
 
 let Table = document.querySelector("#TeamTables");
 
-let TeamStatURL = `http://data.nba.net/data/10s/prod/v1/2021/team_stats_rankings.json`;
+let TeamStatURL = `https://data.nba.net/data/10s/prod/v1/2021/team_stats_rankings.json`;
 
 //If user selected one of the options enter
 function handleCategorySelection() {
