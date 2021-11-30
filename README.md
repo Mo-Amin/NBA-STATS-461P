@@ -1,6 +1,6 @@
 ## NBA STATS Dashboard Application
 
-#### Features
+## Features
 
 - **Home Tab**
 
@@ -32,3 +32,15 @@
 - **Team Tab**
   - **Rankings:** Displays Each teams rank depending on stat user choses
   - **Standings:** Displays Current NBA Western and Eastern Conference Standings
+
+## Under The Hood (Stack)
+
+- **HTML**
+- **CSS**
+- **JavaScript**
+- **Chart.js**
+- **Bootstrap**
+
+## API
+
+- **nba.data**
