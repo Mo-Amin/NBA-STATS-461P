@@ -92,7 +92,7 @@
     </header>
     <div id="player_profile">
       <section id="player_info">
-        <!-- Modal FROM https://getbootstrap.com/docs/5.1/components/modal/ -->
+        <!-- Modal(POPUP for PLAYER PROFILE) FROM https://getbootstrap.com/docs/5.1/components/modal/ -->
         <button
           type="button"
           class="btn btn-primary"
@@ -138,7 +138,7 @@
     <section id="table">
       <div id="tabless">
         <table cellpadding="15" id="statTable">
-          <!-- HEADING OF TABLE -->
+          <!-- HEADING OF TABLE for PLAYER STATS in PLAYER PROFILE -->
           <thead>
             <tr id="header-row">
               <th id="season_Column">Season</th>
@@ -164,6 +164,7 @@
         <label id="Option_label" for="Graph_option"
           ><b>What STAT would you like to see graphed? </b></label
         >
+        <!-- USER WILL CHOOSE WHAT STAT TO GRAPH -->
         <select name="Graph_option" id="Graph_option">
           <option value="None">No Option Selected</option>
           <option value="ppg">Points</option>
@@ -177,9 +178,9 @@
           <option value="ftp">FT%</option>
         </select>
       </div>
-      <!-- <canvas id="StatChart"></canvas>-->
     </section>
 
+    <!-- SEARCH BAR -->
     <div class="form-group">
       <input
         type="text"
@@ -190,6 +191,7 @@
       />
     </div>
 
+    <!-- PLAYER CARDS -->
     <div class="Player_container">
       <div class="row mt-2 g-3"></div>
     </div>

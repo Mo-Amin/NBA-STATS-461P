@@ -1,3 +1,6 @@
+//Mohamed-Amin Cheaito 2021
+
+//options for what stat user wants to sort by
 let Category = document.querySelector("#Category_choice");
 Category.addEventListener("input", handleCategorySelection);
 
@@ -5,50 +8,15 @@ let Table = document.querySelector("#TeamTables");
 
 let TeamStatURL = `http://data.nba.net/data/10s/prod/v1/2021/team_stats_rankings.json`;
 
-let backgroundColors = [
-  "rgba(54, 162, 235, 0.8)",
-  "rgba(255, 206, 86, 0.8)",
-  "rgba(255, 99, 132, 0.8)",
-  "rgba(75, 192, 192, 0.8)",
-  "rgba(153, 102, 255, 0.8)",
-  "rgba(255, 159, 64, 0.8)",
-  "rgba(199, 199, 199, 0.8)",
-  "rgba(83, 102, 255, 0.8)",
-  "rgba(40, 159, 64, 0.8)",
-  "rgba(210, 199, 199, 0.8)",
-  "rgba(78, 52, 199, 0.8)",
-  "rgba(54, 162, 235, 0.8)",
-  "rgba(255, 206, 86, 0.8)",
-  "rgba(255, 99, 132, 0.8)",
-  "rgba(75, 192, 192, 0.8)",
-  "rgba(153, 102, 255, 0.8)",
-  "rgba(255, 159, 64, 0.8)",
-  "rgba(199, 199, 199, 0.8)",
-  "rgba(83, 102, 255, 0.8)",
-  "rgba(40, 159, 64, 0.8)",
-  "rgba(210, 199, 199, 0.8)",
-  "rgba(78, 52, 199, 0.8)",
-];
-
-let borderColors = [
-  "rgba(54, 162, 235, 1)",
-  "rgba(255, 206, 86, 1)",
-  "rgba(255, 99, 132, 1)",
-  "rgba(75, 192, 192, 1)",
-  "rgba(153, 102, 255, 1)",
-  "rgba(255, 159, 64, 1)",
-  "rgba(159, 159, 159, 1)",
-  "rgba(83, 102, 255, 1)",
-  "rgba(40, 159, 64, 1)",
-  "rgba(210, 199, 199, 1)",
-  "rgba(78, 52, 199, 1)",
-];
+//If user selected one of the options enter
 function handleCategorySelection() {
   let Teamarrays = [];
 
   console.log(this.value);
 
+  //Make sure they want to find a appropriate stat
   if (this.value !== "None") {
+    //Add the header of the table.
     Table.innerHTML = `
       <table id="statTable">
           <!-- HEADING OF TABLE -->
@@ -69,34 +37,26 @@ function handleCategorySelection() {
     fetch(TeamStatURL)
       .then((response) => response.json())
       .then((data) => {
-        let names = [];
-        let avgValues = [];
         console.log(data.league.standard.regularSeason.teams);
+        //Go through the teams
         data.league.standard.regularSeason.teams.forEach((element) => {
-          /*
-          Teamarrays[element[this.value].rank - 1] = [
-            element[this.value].avg,
-            element.name + " " + element.nickname,
-            element.teamId,
-          ];
-          */
+          //An array of arrays, first element has value user looking for,
+          //second element has name, and last element has teamId
           Teamarrays.push([
             Number(element[this.value].avg),
             element.name + " " + element.nickname,
             element.teamId,
-            element.nickname,
           ]);
         });
         //https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort
-        Teamarrays = Teamarrays.sort((a, b) => a[0] - b[0]);
-        Teamarrays.reverse();
+        //Sort the array based on the avg value
+        Teamarrays = Teamarrays.sort((a, b) => b[0] - a[0]);
+        //Teamarrays.reverse();
 
-        Teamarrays.forEach((element) => {
-          names.push(element[3]);
-          avgValues.push(element[0]);
-        });
-
+        //The rank
         let count = 1;
+        //Go through array of arrays and add a row to the table for each team's
+        //rank number, name/logo, and avg value of the specific stat chosen by user
         Teamarrays.forEach((element) => {
           TableData.innerHTML += `
           <tr>
@@ -115,11 +75,10 @@ function handleCategorySelection() {
             </tr>`;
           ++count;
         });
-        console.log(Teamarrays);
-        console.log(names);
       })
       .catch((error) => console.log(error));
   } else {
+    //If user selected "No option selected" make sure there is no data displayed
     let CheckTable = document.querySelector("#statTable");
     if (CheckTable !== null) {
       CheckTable.remove();

@@ -5,11 +5,13 @@
   animation-fill-mode: forwards;
 }
 
+/* https://www.geeksforgeeks.org/how-to-create-fade-in-effect-on-page-load-using-css/ */
 .card {
   animation: fadeInAnimation ease 1.3s;
   animation-iteration-count: 1;
   animation-fill-mode: forwards;
 }
+
 /* https://www.geeksforgeeks.org/how-to-create-fade-in-effect-on-page-load-using-css/ */
 @keyframes fadeInAnimation {
   0% {
@@ -18,21 +20,6 @@
   100% {
     opacity: 1;
   }
-}
-#player_profile {
-  display: flex;
-
-  padding-top: 100px;
-  overflow-x: scroll;
-}
-#player_info {
-  display: flex;
-  justify-content: flex-start;
-
-  background: linear-gradient(rgb(65, 64, 64), rgb(0, 0, 0));
-  background-size: cover;
-
-  width: 100%;
 }
 
 .card-body {
@@ -51,6 +38,8 @@
   font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
   margin: 20px;
 }
+
+/* Search Bar */
 input {
   width: 70%;
   height: 5vh;
@@ -67,6 +56,26 @@ input {
   width: 90%;
 }
 
+/* PLAYER PROFILE */
+
+/* Header on top of Player profile */
+#player_profile {
+  display: flex;
+
+  padding-top: 100px;
+  overflow-x: scroll;
+}
+/* Info on the right side of the header */
+#player_info {
+  display: flex;
+  justify-content: flex-start;
+
+  background: linear-gradient(rgb(65, 64, 64), rgb(0, 0, 0));
+  background-size: cover;
+
+  width: 100%;
+}
+
 #header-row {
   background-color: black;
 }
@@ -81,7 +90,8 @@ tr:hover {
   color: blue;
 }
 
-/* How to incorporate border-collapse. Orginated from https://www.w3schools.com/css/css_table.asp */
+/* SECTION for table
+How to incorporate border-collapse. Orginated from https://www.w3schools.com/css/css_table.asp */
 #table {
   display: flex;
   justify-content: center;
@@ -94,6 +104,7 @@ tr:hover {
   overflow-x: scroll;
   height: 50vh;
 }
+
 thead tr {
   font-size: 20px;
   font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
@@ -144,6 +155,7 @@ section {
   background-color: black;
   color: white;
 }
+
 #Option_label {
   color: white;
   margin-top: 30px;
@@ -176,10 +188,6 @@ section {
   display: flex;
   width: 100%;
   height: 100%;
-  /*
-  background: linear-gradient(white, rgb(255, 227, 227));
-  border-radius: 10px;
-  */
 }
 .PlayerProfileTeamPic {
   width: 15%;
@@ -194,8 +202,11 @@ section {
   color: white;
   font-family: Arial, Helvetica, sans-serif;
   text-shadow: 1px 1px red;
+  overflow-y: scroll;
 }
 
+/* Can't add everything so as screen gets smaller 
+some info items don't display */
 @media (max-width: 868px) and (min-width: 600px) {
   .PlayerProfileTeamPic {
     width: 20vw;
@@ -260,8 +271,6 @@ section {
   background: none;
   border: none;
   display: flex;
-  /*margin: 0 auto;*/
-
   color: white;
   text-decoration: underline;
   font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;

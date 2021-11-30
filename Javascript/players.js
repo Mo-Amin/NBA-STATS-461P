@@ -1,6 +1,8 @@
-document.cookie = "cross-site-cookie=bar; SameSite=None Secure";
+//Mohamed-Amin Cheaito 2021
 
+//Player Container
 let container = document.querySelector(".Player_container");
+//Row of players
 let row = document.querySelector(".row");
 
 //Player ID
@@ -22,6 +24,7 @@ player_prof.style.display = "none";
 
 let search = document.querySelector(".form-group");
 
+//Colors for graph in player profile
 let backgroundColors = [
   "rgba(54, 162, 235, 0.8)",
   "rgba(255, 206, 86, 0.8)",
@@ -63,7 +66,7 @@ let borderColors = [
 
 userinput.addEventListener("input", handleinput);
 
-//Search input
+//Search input for a specific player
 function handleinput(event) {
   //If we already have onespace disallow it
   if (event.data === " " && userinput.value.includes(" ") && onespace) {
@@ -95,25 +98,30 @@ function handleinput(event) {
     firstNameCheck = userinput.value;
     lastNameCheck = "";
   }
+  //Don't allow just a space for last name
   if (lastNameCheck == " ") lastNameCheck = "";
 
   fetchprofile(urlNBA);
 }
 
-//let urlNBA = `https://data.nba.net/data/10s/prod/v1/current/standings_conference.json`;
+//Fetch all the players or a specific player
 let fetchprofile = (url) => {
   fetch(url)
     .then((response) => response.json())
     .then((data) => {
       console.log(data.league.standard);
+      //Remove whatever existed within rows before. Will be replaced by our searched results
       row.remove();
+      //We will be adding result to a newly added row div element
       row = document.createElement("div");
       row.setAttribute("class", "row mt-2 g-3");
       container.append(row);
 
-      //We want to check when both search and names from api match
+      //We want to check when both search input and names from api match
       firstNameCheck = firstNameCheck.toLowerCase();
       lastNameCheck = lastNameCheck.toLowerCase();
+
+      //Go through the array that holds all of the players
       data.league.standard.forEach((element) => {
         let FirstNamelowercase = element.firstName.toLowerCase();
         let LastNamelowercase = element.lastName.toLowerCase();
@@ -127,61 +135,58 @@ let fetchprofile = (url) => {
             FirstNamelowercase.includes(lastNameCheck) &&
             LastNamelowercase.includes(firstNameCheck))
         ) {
+          //Create a row of each player card and append it to row.
           let row_of_cards = document.createElement("div");
 
           row_of_cards.setAttribute("class", "col-6 col-md-6 col-lg-4");
           row.append(row_of_cards);
+
+          //Create a card for each player that will be appended to the row_of_card element
           let card = document.createElement("div");
           card.setAttribute("class", "card");
           card.setAttribute("id", element.personId);
+          //Event should occur when user clicks on card
 
-          //Event occurs when user clicks on card
-          card.addEventListener("click", handleClick);
           row_of_cards.append(card);
-          let img = document.createElement("img");
 
+          //Player image appended to card
+          let img = document.createElement("img");
           img.src = `https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/260x190/${element.personId}.png`;
           img.alt = `Media day picture of ${element.firstName} ${element.lastName}`;
+          img.cookie = "cross-site-cookie=bar; SameSite=None Secure";
           card.append(img);
 
+          //Add a body to each card and append each players name to their
+          //specific card
           let body = document.createElement("div");
           body.setAttribute("class", "card-body");
           row_of_cards.append(body);
-
           let player_name = document.createElement("h3");
           player_name.setAttribute("class", "card-title");
           player_name.textContent = element.firstName + " " + element.lastName;
           body.append(player_name);
         }
       });
+      //Event MUST occur when user clicks on card, should take user to player's profile.
       let player_card = document.querySelectorAll(".card");
 
       for (let i = 0; i < player_card.length; ++i) {
         player_card[i].addEventListener("click", handleClick);
       }
-
-      /*
-      //This is when we want display standings for each conference
-
-
-      console.log(data.league.standard.conference.east);
-      let east = data.league.standard.conference.west;
-      east.forEach((element) => {
-        let img = document.createElement("img");
-        img.width = 100;
-        img.src = `https://cdn.nba.com/logos/nba/${element.teamId}/primary/L/logo.svg`;
-        document.querySelector("#body").append(img);
-      });
-      */
     })
     .catch((error) => console.log(error));
 };
+//Must call this once in order to display all of the characters
+//and when we add input to search bar it will call this function and filter out the players.
 fetchprofile(urlNBA);
 
+//The choice user picks based on options given in player profile,
+//Make sure we handle it and add appropriate graph based on what user chose.
 function handleOptionSelection(event) {
   //console.log(val);
   console.log(this.value);
 
+  //Make sure user chose something
   if (this.value !== "None") {
     let urlPlayerStats = `https://data.nba.net/data/10s/prod/v1/2021/players/${id}_profile.json`;
     fetch(urlPlayerStats)
@@ -189,54 +194,55 @@ function handleOptionSelection(event) {
       .then((data) => {
         let playerSeasonStats = data.league.standard.stats.regularSeason.season;
 
-        let seasons = [];
-        let seasonStats = [];
+        //These will be the data inputted within graph.
+        let seasons = []; //Season number we are intrested in
+        let seasonStats = []; //The stat for the specific season
+
         //We have fetched stats and now want to look through the various seasons
         //and display the chosen stat as a graph
         playerSeasonStats.forEach((element) => {
+          //Push into season array, make sure it is converted to string
           seasons.push(String(element.seasonYear));
+          ///Push into seasonStats array, make sure it is converted to float
           seasonStats.push(parseFloat(element.total[this.value]));
-          console.log(
-            String(element.seasonYear),
-            parseFloat(element.total[this.value])
-          );
-          console.log(seasonStats);
-          console.log(seasons);
         });
-        //Not existent in html file
+        //Check if it is Not existent in html file
         let StatChart_Check = document.getElementById("StatChart") === null;
         let StatChart = null;
+        //If it already exists then we must remove statChart element.
         if (!StatChart_Check) {
           StatChart = document.getElementById("StatChart");
           StatChart.remove();
         }
+        //Recreate the statchart canvas element
         StatChart = document.createElement("canvas");
         StatChart.setAttribute("id", "StatChart");
 
+        //Append it to graph section
         document.querySelector("#Graphs").append(StatChart);
 
-        //console.log(StatChart_Check);
-        //let StatChart = document.getElementById("StatChart");
-
         //https://www.chartjs.org/docs/2.8.0/general/fonts.html
+        //Add various fonts, color and fontweight to graph
         Chart.defaults.global.defaultFontColor = "white";
         Chart.defaults.global.defaultFontSize = 16;
         Chart.defaults.global.defaultFontStyle = "bold";
 
+        //Create Bar chart
         let chart = new Chart(StatChart, {
           type: "bar",
           data: {
-            labels: seasons,
+            labels: seasons, //Season years
             datasets: [
               {
-                label: this.value,
-                data: seasonStats,
+                label: this.value, //Stat user chose to graph
+                data: seasonStats, //Stats for season years
                 backgroundColor: backgroundColors,
                 borderColor: borderColors,
                 borderWidth: 1,
               },
             ],
           },
+          //Make sure graph data starts at 0, has a title, doesn't have a legend and font color is white
           options: {
             //https://www.chartjs.org/docs/2.8.0/
             scales: { yAxes: [{ ticks: { beginAtZero: true } }] },
@@ -252,17 +258,11 @@ function handleOptionSelection(event) {
         });
         //http://jsfiddle.net/jyougo/sv2n4zdh/2/
         console.log(StatChart_Check);
-        /*
-        if (!StatChart_Check) {
-          chart.StatChart.canvas.removeEventListener(
-            "wheel",
-            chart._wheelHandler
-          );
-        }
-        */
       })
       .catch((error) => console.log(error));
-  } else {
+  }
+  //If user chose "No option selected" then remove graph and make sure nothing is displayed
+  else {
     let StatChart_Check = document.getElementById("StatChart") === null;
     if (!StatChart_Check) {
       StatChart = document.getElementById("StatChart");
@@ -272,18 +272,21 @@ function handleOptionSelection(event) {
 }
 //When we click on player card we want to show player profile
 function handleClick(event) {
-  //id = event.path[1].id;
-
+  //When user choses what stat to graph make sure we call
+  //handleOptionSelection function so we can graph the specific
+  //stat for each season
   let graph = document.querySelector("#Graph_option");
-  //console.log(graph.value);
   graph.addEventListener("input", handleOptionSelection);
 
   //Get player ID so we can access/find information for that player
   id = this.id;
+  //We have entered player profile, so hide/remove the search bar, and player cards
+  //and now we must only display the information for the player chosen.
   table.style.display = "block";
   search.style.display = "none";
   player_prof.style.display = "flex";
   row.remove();
+
   let urlPlayerStats = `https://data.nba.net/data/10s/prod/v1/2021/players/${id}_profile.json`;
   fetch(urlNBA)
     .then((response) => response.json())
@@ -293,10 +296,12 @@ function handleClick(event) {
       data.league.standard.forEach((element) => {
         if (element.personId == id) {
           console.log(element.firstName);
-          row.remove();
 
+          //Add players name as the title of the popup (popup should be existent within html)
           let popup_title = document.querySelector(".modal-title");
           popup_title.textContent = `#${element.jersey} ${element.firstName} ${element.lastName}`;
+
+          //Add player information to the body of popup
           let popup_body = document.querySelector(".modal-body");
           let str = `<b>Country:</b> ${element.country}<br/><br/><b>DOB (YYYY-MM-DD):</b> ${element.dateOfBirthUTC}<br/><br/><b>Position:</b> ${element.teamSitesOnly.posFull}<br/><br/><b>Height:</b> ${element.heightFeet}'${element.heightInches} (${element.heightMeters}m)<br/><br/><b>Weight:</b> ${element.weightPounds}lbs (${element.weightKilograms}kg)<br/><br/><b>HS/College/Pro:</b> ${element.collegeName}<br/><br/>`;
           str +=
@@ -310,14 +315,17 @@ function handleClick(event) {
           });
 
           popup_body.innerHTML = str;
+
+          //Player profile header
           let info_section = document.querySelector("#player_info");
 
+          //Image of player
           let player_image = document.createElement("img");
           player_image.setAttribute("class", "PlayerProfilePic");
-
           player_image.src = `https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/260x190/${element.personId}.png`;
           player_image.alt = `Picture of ${element.firstName} ${element.lastName} at Media day`;
 
+          //Image of team that player plays for
           let team_image = document.createElement("img");
           team_image.setAttribute("class", "PlayerProfileTeamPic");
           if (element.teamId === "") {
@@ -325,24 +333,16 @@ function handleClick(event) {
           }
           team_image.src = `https://cdn.nba.com/logos/nba/${element.teamId}/primary/D/logo.svg`;
           team_image.alt = `Picture of the team ${element.firstName} ${element.lastName} is on`;
-          //Just temporary use CSS instead
-          //Just add classes for player images and team images
 
-          /*
-          if (window.screen.width < 600) {
-            player_image.width = 130;
-            player_image.height = 95;
-            team_image.width = 75;
-          } else {
-            team_image.width = 150;
-          }
-          */
-
-          //info_section.append(player_image);
+          //Add the player image as a btn that allows the popup to occur.
           document.querySelector("#btnModal").append(player_image);
 
+          //Add team image to the player information header
           info_section.append(team_image);
 
+          //Add quick and visible information about player to the header.
+          //These are on top of the page onto the side of the images, exist in popup
+          //but are just there to not have to dig through popup for important info about player
           let profile_information = document.createElement("div");
           profile_information.setAttribute("id", "Player_Profile_info");
           info_section.append(profile_information);
@@ -385,6 +385,7 @@ function handleClick(event) {
           profile_information.append(h4);
         }
       });
+      //Now we want to display the data for each season within the table
       return fetch(urlPlayerStats);
     })
     .then((response) => response.json())
@@ -392,12 +393,16 @@ function handleClick(event) {
       let playerSeasonStats = data.league.standard.stats.regularSeason.season;
       console.log("STATS", data.league.standard.stats.regularSeason.season);
       //We have fetched stats and now want to look through the various seasons
-      //and display them in a table
+      //and add the data within the specific season into the table
       playerSeasonStats.forEach((element) => {
         console.log(element.seasonYear);
+        //Append a row for the specific season
         let Tablerows = document.querySelector("#tableRows");
         let season_row = document.createElement("tr");
         Tablerows.append(season_row);
+
+        //Add the data values for the season within the table.
+
         let td = document.createElement("td");
         td.textContent = `${element.seasonYear}`;
         td.id = "season_Column";

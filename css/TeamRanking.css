@@ -66,7 +66,7 @@ tbody tr {
   border-bottom: 2px solid white;
 }
 tr:hover {
-  background-color: rgba(20, 194, 218, 0.55);
+  background-color: rgba(218, 43, 20, 0.35);
 }
 thead {
   position: sticky;

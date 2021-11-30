@@ -1,8 +1,10 @@
-document.cookie = "cross-site-cookie=bar; SameSite=None Secure";
+//Mohamed-Amin Cheaito 2021
 
-//https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/date
+//Where most of date info came from https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/date
+//Date section
 let date = document.querySelector("#Date");
 
+//Left arrow which should take us to previous day
 let leftPointButton = document.createElement("Button");
 
 leftPointButton.innerHTML = "<";
@@ -11,8 +13,10 @@ leftPointButton.setAttribute("class", "pointsDate");
 date.append(leftPointButton);
 
 console.log(date.value);
+
 let tmp = new Date();
 
+////Get current date and set it as our default value
 let datetmp = `${tmp.getFullYear()}-`;
 datetmp += `${tmp.getMonth() + 1}-`;
 datetmp += `${tmp.getDate()}`;
@@ -21,52 +25,64 @@ console.log(datetmp);
 //https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/getFullYear
 let current_year = new Date().getFullYear();
 
+//Set attributes of the date input
 let date_input = document.createElement("input");
 date_input.type = "date";
 date_input.min = `${current_year}-10-19`;
 date_input.max = `${current_year + 1}-04-10`;
 date_input.id = "Game_date";
 date_input.value = datetmp;
+//Don't allow user to enter anything, can only click on calendar and choose from there
 date_input.onkeydown = (e) => e.preventDefault();
 
 date.append(date_input);
 
+//Right arrow which should take us to next day
 let RightPointButton = document.createElement("Button");
 RightPointButton.innerHTML = ">";
 RightPointButton.style.marginLeft = "80px";
 RightPointButton.setAttribute("class", "pointsDate");
 date.append(RightPointButton);
 
+//Make sure we account for When user clicks on date input
 date_input.addEventListener("input", handleDate);
 
+//Accounting for when user clicks on arrows
 leftPointButton.addEventListener("click", handleLeftPoint);
 RightPointButton.addEventListener("click", handleRightPoint);
 
 let date_chosen = null;
 
+/*
 function PicImageError(imgError) {
   imgError.src = "../images/Blank_Profile.png";
 }
+*/
 
+//When user clicks on left arrow, go back a day depending on what day we are currently on
 function handleLeftPoint() {
   date_input.stepDown();
   handleDate();
 }
+//When user clicks on right arrow, go to the next day
 function handleRightPoint() {
   date_input.stepUp();
   handleDate();
 }
 
+//When user clicks on date make sure we handle it and if it changes
+//make sure to add the corresponding games for that day.
 function handleDate() {
+  //Check if we currently have games on page
   let games = document.getElementById("Games") === null;
+  //If existent remove and readd the div element
   if (!games) {
     document.getElementById("Games").remove();
     let gameDiv = document.createElement("div");
     gameDiv.id = "Games";
     document.getElementById("body").append(gameDiv);
   }
-  console.log(date_input.value.replaceAll("-", ""));
-  // BOXSCORE URL = http://data.nba.net/data/10s/prod/v1/{data}/{game_Id}_boxscore.json
+
   //Make sure we aren't checking the same date as previous
   if (date_chosen !== date_input.value.replaceAll("-", "")) {
     date_chosen = date_input.value.replaceAll("-", "");
@@ -74,15 +90,23 @@ function handleDate() {
     fetch(url)
       .then((response) => response.json())
       .then((data) => {
+        //If we don't have games then display message
         if (data.games.length === 0) {
           h1 = document.createElement("h1");
           h1.style.color = "white";
           h1.textContent = "No Games Scheduled";
           document.getElementById("Games").append(h1);
-        } else {
+        }
+        //We do have games for this day so display them
+        else {
+          //Used later to attain unique IDs
+          let count = 0;
+          //Go through each game
           data.games.forEach((element) => {
-            //Game time, broadcast, status
+            //Game information - time, broadcast, status etc.
             let info = null;
+
+            //Game has not yet started so display time and broadcast
             if (!element.isGameActivated && element.gameDuration.hours === "") {
               if (element.startTimeEastern === "") info = "TBD";
               else info = element.startTimeEastern;
@@ -91,23 +115,33 @@ function handleDate() {
               } else {
                 info += `<br/> ${element.watch.broadcast.broadcasters.national[0].shortName}`;
               }
-            } else {
+            }
+            //Game is live or has finished
+            else {
+              //Display score
               info = `${element.vTeam.score} - ${element.hTeam.score}`;
+              //If we are in an active game and halftime flag is true then display halfime
               if (element.isGameActivated && element.period.isHalftime)
                 info += "<br/> Halftime";
+              //If game is activated but we have ended a period then say it has ended.
               else if (
                 element.isGameActivated &&
                 element.period.isEndOfPeriod
               ) {
+                //Check if we are in overtime
                 if (element.period.current > 4) {
                   info += `<br/> OT${element.period.current - 4} Ended`;
                 } else info += `<br/> Q${element.period.current} Ended`;
-              } else if (
+              }
+              //If the game has ended display final
+              else if (
                 element.isGameActivated &&
                 element.period.current === 4 &&
                 element.clock === ""
               )
                 info += `<br/> Final`;
+              //If game is activated and we haven't reached any case above
+              //then game is going on currently so display the period it is on and time left in the period
               else if (element.isGameActivated) {
                 if (element.period.current > 4)
                   info += `<br/> OT${element.period.current - 4} ${
@@ -115,9 +149,12 @@ function handleDate() {
                   }`;
                 else
                   info += `<br/> Q${element.period.current} ${element.clock}`;
-              } else info += `<br/> Final`;
+              }
+              //Just a safe case, If nothing has been reached game is final
+              else info += `<br/> Final`;
             }
 
+            //Details of the game that will be displayed within the popup
             let gamedetails = `<b>City:</b> ${element.arena.city}<br/><b>Arena:</b> ${element.arena.name}<br/>`;
             if (element.attendance !== "" && element.attendance !== "0")
               gamedetails += `<b>Game Attendance:</b> ${element.attendance}<br/>`;
@@ -130,6 +167,12 @@ function handleDate() {
             )
               gamedetails += `<a href='${element.tickets.leagGameInfo}'><b>Purchase Tickets</b></a><br/>`;
             let section = document.createElement("section");
+
+            //Add the game info within a button in a section element.
+            //Includes Logos, and info of game from info variable above.
+
+            //Add the popup and add the details to the body from the gamedetails variable above
+            //Includes, logos within title and details of game within body.
             section.innerHTML = `<div class="col-12"> 
           <button
             type="button"
@@ -149,7 +192,7 @@ function handleDate() {
               <figcaption>${element.vTeam.win}-${element.vTeam.loss}</figcaption>
               
             </figure>
-            <p id="atCharacter">${info}<p/>
+            <p class="atCharacter">${info}<p/>
             <figure>
               <img
                 src="https://cdn.nba.com/logos/nba/${element.hTeam.teamId}/primary/D/logo.svg"
@@ -166,13 +209,13 @@ function handleDate() {
             class="modal fade"
             id="exampleModal${element.gameId}"
             tabindex="-1"
-            aria-labelledby="exampleModalLabel"
+            aria-labelledby="exampleModalLabel${count}"
             aria-hidden="true"
           >
             <div class="modal-dialog">
               <div class="modal-content">
-                <div class="modal-header" id=${element.gameId}>
-                  <h5 class="modal-title" id="exampleModalLabel">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel${count}">
                   ${element.vTeam.triCode}<img
                   src="https://cdn.nba.com/logos/nba/${element.vTeam.teamId}/primary/D/logo.svg"
                   width="100"
@@ -205,13 +248,19 @@ function handleDate() {
             </div>
           </div>
         </div>`;
+            //Add count in order to have unique IDs
+            ++count;
+            //Add this game section within the games element existent within html
+            //Will be adding all games within this Games element.
             document.getElementById("Games").append(section);
           });
 
           console.log(data);
+          //Get each game section that we added from above foreach
           let btn = document.querySelectorAll(".btn.btn-primary");
           console.log(btn);
 
+          //Make sure event occurs (call handleClick function) when we click on the game section
           for (let i = 0; i < btn.length; ++i) {
             btn[i].addEventListener("click", handleClick);
           }
@@ -220,31 +269,51 @@ function handleDate() {
       .catch((error) => console.log(error));
   }
 }
+
+//We call it first thing in order to get the games for the default/Current date
 handleDate();
 
+//These are used for the boxscore buttons to help
+//distinguish which one user clicked.
 let vclick = false;
 let hclick = false;
 
 function handleClick() {
+  //Reset the boxscore clicks since we entered a new popup
   vclick = false;
   hclick = false;
 
   console.log(this.id);
   let ModalBody = document.getElementById(`ModalBody${this.id}`);
 
-  //ModalBody.innerHTML = "MOOO";
-
+  //Make sure we remove the - characters in order to meet api requirements
   let dateChosen = date_input.value.replaceAll("-", "");
   let boxscoreURL = `http://data.nba.net/data/10s/prod/v1/${dateChosen}/${this.id}_boxscore.json`;
   fetch(boxscoreURL)
     .then((response) => response.json())
     .then((data) => {
       console.log(data);
-      if (data.stats !== undefined) {
+      //Make sure there is data for each category
+      if (
+        data.stats !== undefined &&
+        (data.stats.vTeam.leaders.points.value === "0" ||
+          data.stats.hTeam.leaders.points.value === "0" ||
+          data.stats.vTeam.leaders.rebounds.value === "0" ||
+          data.stats.hTeam.leaders.rebounds.value === "0" ||
+          data.stats.vTeam.leaders.assists.value === "0" ||
+          data.stats.hTeam.leaders.assists.value === "0")
+      ) {
+        ModalBody.innerHTML = `<h5 class="LeadersLabel"><br/>No data for this game yet! Check Back Later!</h5>`;
+      }
+      //Make sure we have stats for game
+      else if (data.stats !== undefined) {
         console.log(data);
+        //Will be used later to see if we display home or visitor boxscore
         let hteamId = data.basicGameData.hTeam.teamId;
+        //Add the point,rebound, and assist leaders with pictures and values
+        //Add the table headers for boxscore for home/visitor teams
         ModalBody.innerHTML = `
-        <h5 id="LeadersLabel"><br/>Team Leaders</h5>
+        <h5 class="LeadersLabel"><br/>Team Leaders</h5>
         <div class="leaders">
         <figure>
           <figcaption class="LeaderNames">${data.stats.hTeam.leaders.points.players[0].firstName} ${data.stats.hTeam.leaders.points.players[0].lastName}</figcaption>
@@ -295,7 +364,7 @@ function handleClick() {
       <table cellpadding="15">
       <!-- HEADING OF TABLE -->
       <thead>
-        <tr id="header-row">
+        <tr class="header-row">
           <th>Player</th>
           <th>MIN</th>
           <th>PTS</th>
@@ -329,7 +398,7 @@ function handleClick() {
     <table cellpadding="15">
       <!-- HEADING OF TABLE -->
       <thead>
-        <tr id="header-row">
+        <tr class="header-row">
           <th>Player</th>
           <th>MIN</th>
           <th>PTS</th>
@@ -352,10 +421,14 @@ function handleClick() {
     </table>
     </div>`;
         let team = null;
+
+        //We have two buttons for home/visitor team make sure we have an event occuring
+        //When those buttons are called.
         let boxscoreShowBtn = document.querySelectorAll(".btn.btn-dark");
         for (let i = 0; i < boxscoreShowBtn.length; ++i) {
           boxscoreShowBtn[i].addEventListener("click", handleBoxscorebutton);
         }
+        //Go through active players and add their data to their teams tables(boxscore)
         data.stats.activePlayers.forEach((element) => {
           if (element.teamId === hteamId) {
             team = document.getElementById(`HomeTeamrows${this.id}`);
@@ -383,12 +456,10 @@ function handleClick() {
           </tr>`;
           }
         });
-        /*
+
         let element = null;
-        if (this.id.slice(0,5)) element = data.stats.hTeam.totals;
-        else element = data.stats.vTeam.totals;
-        */
-        let element = null;
+
+        //We added each active players stats now we must add the total stats combined for the team in the last row.
         element = data.stats.hTeam.totals;
         team = document.getElementById(`HomeTeamrows${this.id}`);
         for (let i = 0; i < 2; ++i) {
@@ -418,73 +489,53 @@ function handleClick() {
     .catch((error) => console.log(error));
 }
 
+//Must handle box score buttons clicked and will determine which team boxscore to display
 function handleBoxscorebutton() {
+  //We assigned the table ids to visitorTable/hometable and their gameID
+
+  //So the first 5 characters will help determine the team we will be displaying
   let Team = this.id.slice(0, 5);
   let GameID = this.id.slice(5, this.id.length);
   console.log(this.id);
   // console.log(this.id.slice(5, this.id.length));
 
+  //Allows us to easily show/hide the tables(boxscores)
   let vtable = document.getElementById(`VisitorTable${GameID}`);
   let htable = document.getElementById(`HomeTable${GameID}`);
+
+  //If user clicked visitor team enter
   if (Team === "vTeam") {
-    //If we clicked and want to show
+    //If visitor isn't already clicked user wants to show the table
     if (!vclick) {
       vtable.style.display = "block";
       htable.style.display = "none";
       hclick = false;
       vclick = true;
-    } else {
+    }
+    //If it has already been clicked then user wants to hide table
+    else {
       vtable.style.display = "none";
       vclick = false;
     }
-    /*
-    vtable.style.display = "block";
-    htable.style.display = "none";
-    */
-  } else if (Team === "hTeam") {
+  }
+  //If user clicked home team enter
+  else if (Team === "hTeam") {
+    //If home isn't already clicked user wants to show the table
     if (!hclick) {
       htable.style.display = "block";
       vtable.style.display = "none";
       vclick = false;
       hclick = true;
-    } else {
+    }
+    //If it has already been clicked then user wants to hide table
+    else {
       htable.style.display = "none";
       hclick = false;
     }
-
-    /*
-    htable.style.display = "block";
-    vtable.style.display = "none";
-    */
-  } else {
+  }
+  //Safe case to hide both tables
+  else {
     vtable.style.display = "none";
     htable.style.display = "none";
   }
-  /*
-  if (Team === "vTeam") {
-    
-    table = document.getElementById(`VisitorTable${GameID}`);
-    console.log(table.style.display.value);
-    
-   //If it is clicked
-    if (!vclick) {
-      table.style.display = "block";
-      vclick = true;
-    } else {
-      table.style.display = "none";
-      vclick = false;
-    }
-  }
-  if (Team === "hTeam") {
-    table = document.getElementById(`HomeTable${GameID}`);
-    console.log(table.style.display.value);
-    if (!hclick) {
-      table.style.display = "block";
-      hclick = true;
-    } else {
-      table.style.display = "none";
-      hclick = false;
-    }
-  }
-  */
 }

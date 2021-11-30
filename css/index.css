@@ -125,6 +125,7 @@ section#featured {
 }
 /* Featured player styles */
 
+/* Developers Section */
 #Developers {
   background-color: black;
   text-align: center;
@@ -135,6 +136,7 @@ section#featured {
 .devImages {
   width: 40vh;
   height: 50vh;
+  border: 5px double white;
 }
 #DevImgSec {
   display: flex;

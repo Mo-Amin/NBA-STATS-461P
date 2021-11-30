@@ -3,8 +3,8 @@
   padding-top: 100px;
   background-color: black;
 }
+/* Sections that contain games only */
 section:not(#Date) {
-  /*background-color: rgb(185, 185, 185);*/
   background: linear-gradient(rgb(206, 206, 206), black);
   border: 0.5px solid red;
   box-shadow: 5px 5px red;
@@ -12,11 +12,6 @@ section:not(#Date) {
   width: 92%;
   margin: 0 auto;
   margin-top: 20px;
-
-  /*
-  margin: 0 auto;
-  margin-bottom: 50px;
-  */
 }
 
 #Date {
@@ -26,6 +21,7 @@ section:not(#Date) {
   background-color: black;
   margin: 40px;
 }
+/* Around the rectangle with game info/logos */
 .btn.btn-primary {
   display: flex;
   background: none;
@@ -44,16 +40,6 @@ section:not(#Date) {
 .modal-header > * {
   margin: 0 auto;
 }
-/*
-span {
-  font-size: 30px;
-  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
-  padding-top: 30%;
-  margin-left: 10px;
-  font-weight: bold;
-  justify-content: center;
-}
-*/
 
 figcaption {
   font-size: 18px;
@@ -73,7 +59,8 @@ figcaption {
   align-items: center;
 }
 
-#atCharacter {
+/* The info in the middle of each game. Ran out of names and orginally was just the @ character */
+.atCharacter {
   height: 100%;
   align-self: center;
 
@@ -83,12 +70,12 @@ figcaption {
 }
 
 @media (max-width: 540px) {
-  #atCharacter {
+  .atCharacter {
     font-size: 30px;
   }
 }
 @media (max-width: 480px) {
-  #atCharacter {
+  .atCharacter {
     font-size: 25px;
   }
 }
@@ -121,20 +108,21 @@ td {
 tbody tr {
   border-bottom: 1px solid black;
 }
-tr:hover {
+tr:not(.header-row):hover {
   background-color: rgba(251, 255, 0, 0.65);
 }
-#header-row {
+.header-row {
   background-color: black;
 }
 
-#header-row > th {
+.header-row > th {
   color: white;
 }
 h1 {
   text-align: center;
 }
 
+/* Boxscore buttons */
 .btn.btn-dark:focus {
   box-shadow: none;
 }
@@ -144,10 +132,10 @@ h1 {
 }
 
 #BoxscoreLabel,
-#LeadersLabel {
+.LeadersLabel {
   font-weight: bold;
 }
-#LeadersLabel {
+.LeadersLabel {
   text-align: center;
 }
 
@@ -221,6 +209,7 @@ div figure {
   margin: 0;
 }
 
+/* The arrows for next/previous dates */
 .pointsDate {
   font-size: 50px;
   background: none;
@@ -232,6 +221,7 @@ div figure {
 .pointsDate:hover {
   color: red;
 }
+/* Date input */
 #Game_date {
   height: fit-content;
 }
