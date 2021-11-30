@@ -285,3 +285,9 @@ some info items don't display */
 .modal-title {
   font-size: 40px;
 }
+
+#NoDataPlayerProfle {
+  color: white;
+  text-align: center;
+  font-weight: bold;
+}

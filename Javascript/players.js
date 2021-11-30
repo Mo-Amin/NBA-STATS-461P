@@ -391,68 +391,77 @@ function handleClick(event) {
     .then((response) => response.json())
     .then((data) => {
       let playerSeasonStats = data.league.standard.stats.regularSeason.season;
-      console.log("STATS", data.league.standard.stats.regularSeason.season);
-      //We have fetched stats and now want to look through the various seasons
-      //and add the data within the specific season into the table
-      playerSeasonStats.forEach((element) => {
-        console.log(element.seasonYear);
-        //Append a row for the specific season
-        let Tablerows = document.querySelector("#tableRows");
-        let season_row = document.createElement("tr");
-        Tablerows.append(season_row);
+      //If player has no data then display message indicating that
+      if (playerSeasonStats.length === 0) {
+        document.querySelector("#tabless").style.display = "none";
+        document.querySelector("#Graphs").style.display = "none";
+        document.querySelector(
+          "#table"
+        ).innerHTML = `<h1 id="NoDataPlayerProfle"> No data to display</h1>`;
+      } else {
+        console.log("STATS", data.league.standard.stats.regularSeason.season);
+        //We have fetched stats and now want to look through the various seasons
+        //and add the data within the specific season into the table
+        playerSeasonStats.forEach((element) => {
+          console.log(element.seasonYear);
+          //Append a row for the specific season
+          let Tablerows = document.querySelector("#tableRows");
+          let season_row = document.createElement("tr");
+          Tablerows.append(season_row);
 
-        //Add the data values for the season within the table.
+          //Add the data values for the season within the table.
 
-        let td = document.createElement("td");
-        td.textContent = `${element.seasonYear}`;
-        td.id = "season_Column";
-        season_row.append(td);
-        td.style.fontWeight = "bold";
+          let td = document.createElement("td");
+          td.textContent = `${element.seasonYear}`;
+          td.id = "season_Column";
+          season_row.append(td);
+          td.style.fontWeight = "bold";
 
-        let GP_td = document.createElement("td");
-        GP_td.textContent = `${element.total.gamesPlayed}`;
-        season_row.append(GP_td);
+          let GP_td = document.createElement("td");
+          GP_td.textContent = `${element.total.gamesPlayed}`;
+          season_row.append(GP_td);
 
-        let GS_td = document.createElement("td");
-        GS_td.textContent = `${element.total.gamesStarted}`;
-        season_row.append(GS_td);
+          let GS_td = document.createElement("td");
+          GS_td.textContent = `${element.total.gamesStarted}`;
+          season_row.append(GS_td);
 
-        let Min_td = document.createElement("td");
-        Min_td.textContent = `${element.total.mpg}`;
-        season_row.append(Min_td);
+          let Min_td = document.createElement("td");
+          Min_td.textContent = `${element.total.mpg}`;
+          season_row.append(Min_td);
 
-        let PTS_td = document.createElement("td");
-        PTS_td.textContent = `${element.total.ppg}`;
-        season_row.append(PTS_td);
+          let PTS_td = document.createElement("td");
+          PTS_td.textContent = `${element.total.ppg}`;
+          season_row.append(PTS_td);
 
-        let AST_td = document.createElement("td");
-        AST_td.textContent = `${element.total.apg}`;
-        season_row.append(AST_td);
+          let AST_td = document.createElement("td");
+          AST_td.textContent = `${element.total.apg}`;
+          season_row.append(AST_td);
 
-        let REB_td = document.createElement("td");
-        REB_td.textContent = `${element.total.rpg}`;
-        season_row.append(REB_td);
+          let REB_td = document.createElement("td");
+          REB_td.textContent = `${element.total.rpg}`;
+          season_row.append(REB_td);
 
-        let BLK_td = document.createElement("td");
-        BLK_td.textContent = `${element.total.bpg}`;
-        season_row.append(BLK_td);
+          let BLK_td = document.createElement("td");
+          BLK_td.textContent = `${element.total.bpg}`;
+          season_row.append(BLK_td);
 
-        let STL_td = document.createElement("td");
-        STL_td.textContent = `${element.total.spg}`;
-        season_row.append(STL_td);
+          let STL_td = document.createElement("td");
+          STL_td.textContent = `${element.total.spg}`;
+          season_row.append(STL_td);
 
-        let TO_td = document.createElement("td");
-        TO_td.textContent = `${element.total.topg}`;
-        season_row.append(TO_td);
+          let TO_td = document.createElement("td");
+          TO_td.textContent = `${element.total.topg}`;
+          season_row.append(TO_td);
 
-        let FT_td = document.createElement("td");
-        FT_td.textContent = `${element.total.ftp}`;
-        season_row.append(FT_td);
+          let FT_td = document.createElement("td");
+          FT_td.textContent = `${element.total.ftp}`;
+          season_row.append(FT_td);
 
-        let FG_td = document.createElement("td");
-        FG_td.textContent = `${element.total.fgp}`;
-        season_row.append(FG_td);
-      });
+          let FG_td = document.createElement("td");
+          FG_td.textContent = `${element.total.fgp}`;
+          season_row.append(FG_td);
+        });
+      }
     })
     .catch((error) => console.log(error));
   console.log(id);
