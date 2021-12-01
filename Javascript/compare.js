@@ -77,7 +77,10 @@ form.addEventListener('submit', async (event) => {
     }
   }
   
-  else alert("Enter names for two players");
+  else {
+    alert("Enter names for two players");
+    section.style.height = "100vh"
+  }
 
 })
 
@@ -91,7 +94,6 @@ async function getData(playerNames, chart) {
   console.log(playerNames)
    data.league.standard.forEach((player) => {
       
-
        if(player.firstName.toLowerCase() == playerNames[0].firstName.toLowerCase() && player.lastName.toLowerCase() == playerNames[0].lastName.toLowerCase()) {
        
           playerIds.push(player.personId)
