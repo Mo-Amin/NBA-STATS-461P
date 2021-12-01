@@ -15,6 +15,8 @@ fetch(url)
         win: team.win,
         loss: team.loss,
         streak: team.streak,
+        winStreak: team.isWinStreak,
+        
         name:
           team.teamSitesOnly.teamName + " " + team.teamSitesOnly.teamNickname,
       };
@@ -28,6 +30,7 @@ fetch(url)
         win: team.win,
         loss: team.loss,
         streak: team.streak,
+        winStreak: team.isWinStreak,
         name:
           team.teamSitesOnly.teamName + " " + team.teamSitesOnly.teamNickname,
       };
@@ -53,7 +56,7 @@ fetch(url)
       name.textContent = `${east[i].name}`;
       win.textContent = `${east[i].win}`;
       loss.textContent = `${east[i].loss}`;
-      streak.textContent = `${east[i].streak}`;
+      east[i].winStreak?streak.textContent = `${east[i].streak}`: streak.textContent = '0';
 
       team.append(rank,name,win, loss, streak);
       eastList.append(team);
@@ -77,7 +80,7 @@ fetch(url)
       name.textContent = `${west[i].name}`;
       win.textContent = `${west[i].win}`;
       loss.textContent = `${west[i].loss}`;
-      streak.textContent = `${west[i].streak}`;
+      west[i].winStreak?streak.textContent = `${east[i].streak}`: streak.textContent = '0';
 
       team.append(rank,name,win, loss, streak);
       westList.append(team);
