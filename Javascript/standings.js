@@ -31,8 +31,7 @@ fetch(url)
         loss: team.loss,
         streak: team.streak,
         winStreak: team.isWinStreak,
-        name:
-          team.teamSitesOnly.teamName + " " + team.teamSitesOnly.teamNickname,
+        name:team.teamSitesOnly.teamName + " " + team.teamSitesOnly.teamNickname,
       };
 
       return standings;
@@ -80,9 +79,9 @@ fetch(url)
       name.textContent = `${west[i].name}`;
       win.textContent = `${west[i].win}`;
       loss.textContent = `${west[i].loss}`;
-      west[i].winStreak?streak.textContent = `${east[i].streak}`: streak.textContent = '0';
+      west[i].winStreak?streak.textContent = `${west[i].streak}`: streak.textContent = '0';
 
-      team.append(rank,name,win, loss, streak);
+      team.append(rank,name,win,loss,streak);
       westList.append(team);
     }
 
