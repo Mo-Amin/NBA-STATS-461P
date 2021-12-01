@@ -131,6 +131,8 @@ function handleDate() {
                 //Check if we are in overtime
                 if (element.period.current > 4) {
                   info += `<br/> OT${element.period.current - 4} Ended`;
+                } else if (element.period.current === 2) {
+                  info += "<br/> Halftime";
                 } else info += `<br/> Q${element.period.current} Ended`;
               }
               //If the game has ended display final
