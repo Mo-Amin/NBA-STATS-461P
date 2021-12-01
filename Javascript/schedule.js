@@ -142,8 +142,16 @@ function handleDate() {
                 //Check if we are in overtime
                 if (element.period.current > 4) {
                   info += `<br/> OT${element.period.current - 4} Ended`;
-                } else if (element.period.current === 2) {
+                }
+                //No write to show Q2 ended
+                else if (element.period.current === 2) {
                   info += "<br/> Halftime";
+                }
+                //If API forgot to set gameactivated flag to false then enter
+                else if (element.period.current === 4) {
+                  if (element.vTeam.score !== element.hTeam.score) {
+                    info += `<br/> Final`;
+                  }
                 } else info += `<br/> Q${element.period.current} Ended`;
               }
               //If the game has ended display final
