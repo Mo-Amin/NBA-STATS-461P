@@ -68,7 +68,7 @@ section {
   background-color: black;
   padding-top: 5rem;
   height: auto;
-  padding: 4rem;
+  padding: 4rem 5rem 2rem;
 }
 
 .container {
@@ -101,4 +101,16 @@ tr:nth-child(even) {
 
 td {
   padding: 0.75rem 0;
+}
+
+@media (max-width: 768px) {
+  section {
+    padding: 4rem 1rem;
+  }
+}
+
+@media (max-width: 400px) {
+  section {
+    padding: 4rem 0;
+  }
 }
