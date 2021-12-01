@@ -141,11 +141,12 @@ container {
   width: 40vh;
   height: 50vh;
   border: 5px double white;
+  margin-right: 5px;
 }
 #DevImgSec {
   display: flex;
   justify-content: center;
-  flex-direction: row;
+  flex-wrap: wrap;
 }
 
 #WelcomeMessage {
