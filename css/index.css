@@ -3,9 +3,6 @@
   padding: 0;
   box-sizing: border-box;
 }
-body {
-  background-color: rgba(46, 49, 49, 0.85);
-}
 
 .form-group {
   padding-top: 100px;
@@ -74,6 +71,11 @@ section#featured {
   padding-top: 6rem;
   padding-bottom: 3rem;
   padding-top: 100px;
+}
+
+.row {
+  width: 100%;
+  margin: 0;
 }
 
 #featured h1 {
