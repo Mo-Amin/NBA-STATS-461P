@@ -16,10 +16,21 @@ console.log(date.value);
 
 let tmp = new Date();
 
-////Get current date and set it as our default value
+//Get current date and set it as our default value
 let datetmp = `${tmp.getFullYear()}-`;
-datetmp += `${tmp.getMonth() + 1}-`;
-datetmp += `${tmp.getDate()}`;
+
+//getMonth = 0-11
+if (tmp.getMonth() < 9) {
+  datetmp += `0${tmp.getMonth() + 1}-`;
+} else {
+  datetmp += `${tmp.getMonth() + 1}-`;
+}
+//getDate = 1-31
+if (tmp.getDate() < 10) {
+  datetmp += `0${tmp.getDate()}`;
+} else {
+  datetmp += `${tmp.getDate()}`;
+}
 console.log(datetmp);
 
 //https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/getFullYear
@@ -131,8 +142,16 @@ function handleDate() {
                 //Check if we are in overtime
                 if (element.period.current > 4) {
                   info += `<br/> OT${element.period.current - 4} Ended`;
-                } else if (element.period.current === 2) {
+                }
+                //No write to show Q2 ended
+                else if (element.period.current === 2) {
                   info += "<br/> Halftime";
+                }
+                //If API forgot to set gameactivated flag to false then enter
+                else if (element.period.current === 4) {
+                  if (element.vTeam.score !== element.hTeam.score) {
+                    info += `<br/> Final`;
+                  }
                 } else info += `<br/> Q${element.period.current} Ended`;
               }
               //If the game has ended display final
@@ -260,7 +279,6 @@ function handleDate() {
           console.log(data);
           //Get each game section that we added from above foreach
           let btn = document.querySelectorAll(".btn.btn-primary");
-          console.log(btn);
 
           //Make sure event occurs (call handleClick function) when we click on the game section
           for (let i = 0; i < btn.length; ++i) {
@@ -285,6 +303,7 @@ function handleClick() {
   vclick = false;
   hclick = false;
 
+  //GameID
   console.log(this.id);
   let ModalBody = document.getElementById(`ModalBody${this.id}`);
 
