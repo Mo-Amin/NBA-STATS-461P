@@ -1,5 +1,6 @@
 const form = document.querySelector("form");
 let statsRow = document.getElementById("statsRow");
+let section = document.getElementById("compare");
 
 const chartContainer = document.querySelector(".chart-container");
 
@@ -10,20 +11,22 @@ const labels = [
   'RPG',
   'MIN',
 ];
-
+//'rgb(219, 78, 78)'
 const data = {
   labels: labels,
   datasets: [{
     label: 'Player 1',
-    backgroundColor: 'rgb(153, 204, 255)',
-    borderColor: 'rgb(255, 99, 132)',
+    backgroundColor: 'rgb(219, 78, 78)',
+    borderColor: 'rgb(255,255,255)',
+    color: 'rgb(255,255,255)',
     data: [1,2,3,4]
     
   },
   {
       label: 'Player 2',
-      backgroundColor: 'rgb(255, 255, 153)',
+      backgroundColor: 'rgb(0,0,0)',
       borderColor: 'rgb(255, 99, 132)',
+      color: 'rgb(255,255,255,255)',
       data: [1,2,3,4],
       
     },
@@ -44,14 +47,14 @@ const myChart = new Chart(
 
 form.addEventListener('submit', async (event) => {
     event.preventDefault();
-
+    chartContainer.style.display="none";
     removeChildren(statsRow);
 
-    let playerStats = [];
     
     const players = document.querySelectorAll('input[type=text]');
 
     let playerNames = [];
+    if(players[0].value && players[0].value) {
     players.forEach((player) => {
 
         let nameObj = {}; 
@@ -64,22 +67,18 @@ form.addEventListener('submit', async (event) => {
         playerNames.push(nameObj);
         
         removeData(myChart);
-        //addData(myChart, playerStats, playerStats);
-
+     
     })
-
+    if((playerNames[0].firstName && playerNames[0].lastName) && (playerNames[1].firstName && playerNames[1].lastName))
     getData(playerNames, myChart);
+    else {
+      alert("Enter first and last names")
+      section.style.height = "100vh"
+    }
+  }
   
+  else alert("Enter names for two players");
 
-    //THIS WAS FOR ADDING A 'vs' BETWEEN THE PLAYER CARDS, MAYBE DO LATER?
-    // let vsCol = document.createElement('div');
-    // vsCol.className="col-xl-4 order-xl-2";
-    // let vs = document.createElement('h2');
-    // vs.textContent = "VS";
-    // vsCol.appendChild(vs);
-    // statsRow.append(vsCol);
-   
-   
 })
 
 async function getData(playerNames, chart) {
@@ -88,8 +87,10 @@ async function getData(playerNames, chart) {
  .then((data) => { 
   let playerIds = [];
   let playerStats = [];
+
+  console.log(playerNames)
    data.league.standard.forEach((player) => {
-    
+      
 
        if(player.firstName.toLowerCase() == playerNames[0].firstName.toLowerCase() && player.lastName.toLowerCase() == playerNames[0].lastName.toLowerCase()) {
        
@@ -141,8 +142,6 @@ async function getData(playerNames, chart) {
               playerStats[1].stats.push(parseFloat(stats.rpg))
               playerStats[1].stats.push(parseFloat(stats.mpg)) 
 
-              console.log(playerStats)
-
               playerStats.forEach(profile => {
                 let colElement = document.createElement('div');
                 colElement.className = "player col-md-3";
@@ -193,13 +192,21 @@ async function getData(playerNames, chart) {
 
 
               //re-render chart
+              section.style.height="auto";
               removeData(chart);
               addData(chart,playerStats[0],playerStats[1]);
               chartContainer.style.display = "block";
             })
             
               })
-            .catch(e => console.log())
+            .catch(e => console.log(e))
+          
+        }
+
+        else {
+
+          chartContainer.style.display = "none";
+          alert("At least one of the players cannot be found, try again")
           
         }
 
