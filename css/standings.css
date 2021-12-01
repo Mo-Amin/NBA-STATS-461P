@@ -62,8 +62,47 @@
     width: 80%;
   }
 
+  section {
+    color: white;
+    width: 100%;
+    background-color: black;
+    padding-top: 5rem;
+    height: auto;
+    padding: 4rem
+  }
+
 .container {
     text-align: center;
-    position: relative;
-    margin-top: 10rem;
+    position: relative;  
+    width: 100%;
+    
 }
+
+.col {
+ padding: 0rem;
+}
+
+.table {
+  width: 100%;
+  border-spacing: 10px;
+}
+
+tr {
+  background-color: rgba(46, 49, 49, 1);
+  padding: 0 1rem;
+  color: white;
+  border-bottom: 1px solid red;
+  align-items: center;  
+
+}
+
+
+tr:nth-child(even) {
+  padding: 1rem;
+  background-color: rgb(117, 117, 117);
+}
+
+td {
+  padding: .75rem 0
+}
+

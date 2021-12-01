@@ -4,9 +4,6 @@ const attributes = document.querySelector('#attributes');
 
 const numPlayers = 545;
 
-
-//TODO: still need to grab player photo and the team that hey plays for 
-
 let getPlayer = async () => { 
 await fetch("https://data.nba.net/data/10s/prod/v1/2021/players.json")
 .then(response => response.json())
@@ -65,10 +62,8 @@ await fetch("https://data.nba.net/data/10s/prod/v1/2021/players.json")
     const rbg = playerStats.latest.rpg;
     const min = playerStats.latest.mpg;
 
-    stats.children[1].innerHTML = `PPG: ${ppg}`
-
     if(ppg != -1) {
-
+    stats.children[1].innerHTML = `PPG: ${ppg}`
     stats.children[2].innerHTML = `APG: ${ast}`
     stats.children[3].innerHTML = `RBG: ${rbg}`
     stats.children[4].innerHTML = `Min: ${min}`
