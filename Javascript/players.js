@@ -153,7 +153,7 @@ let fetchprofile = (url) => {
           let img = document.createElement("img");
           img.src = `https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/260x190/${element.personId}.png`;
           img.alt = `Media day picture of ${element.firstName} ${element.lastName}`;
-          img.cookie = "cross-site-cookie=bar; SameSite=None Secure";
+          //img.cookie = "cross-site-cookie=bar; SameSite=None Secure";
           card.append(img);
 
           //Add a body to each card and append each players name to their
