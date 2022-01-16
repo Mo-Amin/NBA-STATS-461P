@@ -34,7 +34,8 @@ if (tmp.getDate() < 10) {
 console.log(datetmp);
 
 //https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/getFullYear
-let current_year = new Date().getFullYear();
+
+let current_year = 2021;
 
 //Set attributes of the date input
 let date_input = document.createElement("input");
